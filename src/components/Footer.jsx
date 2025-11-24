@@ -140,13 +140,13 @@ const Footer = () => {
                 © {new Date().getFullYear()} <span className="text-white font-bold">Almacenas</span>. Todos los derechos reservados.
               </div>
               <div className="flex gap-6 text-sm">
-                <a href="#" className="hover:text-white transition-colors duration-300">
+                <a href="/Nosotros" className="hover:text-white transition-colors duration-300">
                   Política de Privacidad
                 </a>
-                <a href="#" className="hover:text-white transition-colors duration-300">
+                <a href="/Nosotros" className="hover:text-white transition-colors duration-300">
                   Términos y Condiciones
                 </a>
-                <a href="#" className="hover:text-white transition-colors duration-300">
+                <a href="/Nosotros" className="hover:text-white transition-colors duration-300">
                   Política de Cookies
                 </a>
               </div>

@@ -215,11 +215,11 @@ const Formulario = () => {
             />
             <span className="text-sm text-gray-700">
               He leído y acepto los{" "}
-              <a href="#" className="text-[#cb4a2a] underline">
+              <a href="/Nosotros" className="text-[#cb4a2a] underline">
                 Términos y Condiciones
               </a>{" "}
               y la{" "}
-              <a href="#" className="text-[#cb4a2a] underline">
+              <a href="/Nosotros" className="text-[#cb4a2a] underline">
                 Política de Privacidad
               </a>.
             </span>

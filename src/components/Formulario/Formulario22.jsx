@@ -319,9 +319,9 @@ const Formulario = () => {
                 />
                 <span>
                   He leído y acepto los{" "}
-                  <a href="#" className="text-[#2c976a] font-semibold">Términos y Condiciones</a>{" "}
+                  <a href="/Nosotros" className="text-[#2c976a] font-semibold">Términos y Condiciones</a>{" "}
                   y la{" "}
-                  <a href="#" className="text-[#2c976a] font-semibold">Política de Privacidad</a>.
+                  <a href="/Nosotros" className="text-[#2c976a] font-semibold">Política de Privacidad</a>.
                 </span>
               </motion.label>
 
@@ -335,7 +335,7 @@ const Formulario = () => {
                 />
                 <span>
                   Acepto el envío de publicidad según la{" "}
-                  <a href="#" className="text-[#2c976a] font-semibold">Política de Privacidad</a>.
+                  <a href="/Nosotros" className="text-[#2c976a] font-semibold">Política de Privacidad</a>.
                 </span>
               </motion.label>
             </motion.div>

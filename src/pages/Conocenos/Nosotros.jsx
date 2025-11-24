@@ -1,7 +1,7 @@
 // import { useState, useEffect } from "react";
 // import {Home, CreditCard, Handshake, TrendingUp, Building2, Users, MapPin } from "lucide-react";
 // import { motion } from "framer-motion";
-import HeroSection from "../../components/Nosotros/HeroSection";
+// import HeroSection from "../../components/Nosotros/HeroSection";
 import NosotrosSection from "../../components/Nosotros/NosotrosSection";
 import BeneficiosSection from "../../components/Nosotros/BeneficiosSection";
 import SeccionFamiliasFelices from "../../components/Nosotros/SeccionFamiliasFelices";
