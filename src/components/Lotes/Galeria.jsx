@@ -92,27 +92,27 @@ const Galeria = () => {
             )}
 
             {activeTab === 'videos' && (
-              <div>
-                <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-                  Video del proyecto
-                </h2>
-                <div className="bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
-                  <div className="relative pt-[56.25%]">
-                    <video 
-                      className="absolute top-0 left-0 w-full h-full"
-                      controls
-                      autoPlay
-                      muted
-                    >
-                      <source src="Lotes/ChancayLotes.mp4" type="video/mp4" />
-                      Tu navegador no soporta el elemento de video.
-                    </video>
-                  </div>
-                </div>
-                <div className="mt-6 text-center text-gray-600">
-                  <p>Conoce más sobre nuestra urbanización en este video.</p>
+            <div>
+              <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
+                Video del proyecto
+              </h2>
+
+              <div className="bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
+                <div className="relative pt-[56.25%]">
+                  <iframe
+                    className="absolute top-0 left-0 w-full h-full"
+                    src="https://www.youtube.com/embed/xSPur6p6PNs"
+                    title="Video del proyecto"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
                 </div>
               </div>
+
+              <div className="mt-6 text-center text-gray-600">
+                <p>Conoce más sobre nuestra urbanización en este video.</p>
+              </div>
+            </div>
             )}
           </div>
         </div>
