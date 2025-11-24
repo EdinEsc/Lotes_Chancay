@@ -1,0 +1,57 @@
+/* Testimonios.css */
+.testimonios-container .swiper-button-prev:after,
+.testimonios-container .swiper-rtl .swiper-button-next:after {
+    content: '' !important;
+}
+
+.testimonios-container .swiper-button-next:after,
+.testimonios-container .swiper-rtl .swiper-button-prev:after {
+    content: '' !important;
+}
+
+.testimonios-container .swiper-button-next svg,
+.testimonios-container .swiper-button-prev svg {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+.testimonios-container .swiper-button-next,
+.testimonios-container .swiper-button-prev {
+    position: relative !important;
+    margin-top: 32px;
+}
+
+.testimonios-container .swiper-slide.swiper-slide-active {
+    --tw-border-opacity: 1 !important;
+    border-color: rgb(79 70 229 / var(--tw-border-opacity)) !important;
+}
+
+.testimonios-container .swiper-slide.swiper-slide-active>.swiper-slide-active\:text-indigo-600 {
+    --tw-text-opacity: 1;
+    color: rgb(79 70 229 / var(--tw-text-opacity));
+}
+
+.testimonios-container .swiper-slide.swiper-slide-active>.flex .grid .swiper-slide-active\:text-indigo-600 {
+    --tw-text-opacity: 1;
+    color: rgb(79 70 229 / var(--tw-text-opacity));
+}
+
+/* Estilos para las tarjetas de testimonio */
+.testimonio-card {
+    transition: all 0.5s ease;
+}
+
+/* .testimonio-card:hover {
+    border-color: rgb(79 70 229);
+} */
+
+.testimonio-card:hover .testimonio-text {
+    color: #1f2937;
+}
+
+/* Controles específicos del slider de testimonios */
+.testimonios-prev,
+.testimonios-next {
+    position: relative !important;
+    margin-top: 32px;
+}
