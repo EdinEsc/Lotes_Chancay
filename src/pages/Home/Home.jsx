@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { MapPin, Ruler } from "lucide-react";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+// import { useState, useEffect } from "react";
+// import { MapPin, Ruler } from "lucide-react";
+// import { motion } from "framer-motion";
+// import { Link } from "react-router-dom";
 import Testimonios from '../../components/Testimonios/Testimonios';
 import Team from '../../components/Team/Team';
 import Hero from '../../components/Hero/Hero';
