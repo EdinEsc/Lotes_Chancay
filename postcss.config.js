@@ -1,7 +1,7 @@
 module.exports = {
-  plugins: {
-    'postcss-nesting': {}, // habilita anidación
-    tailwindcss: {},
-    autoprefixer: {},
-  },
+  plugins: [
+    require('postcss-nesting'),
+    require('tailwindcss'),
+    require('autoprefixer'),
+  ]
 };
