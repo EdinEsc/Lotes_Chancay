@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   Home,
   Users,
@@ -70,7 +71,7 @@ const NosotrosSection = () => {
 
   return (
     <motion.section
-      className="relative bg-gradient-to-br from-[#2c976a] to-[#247b57] py-16 md:py-20 lg:py-28 -mt-[1px] w-full overflow-hidden"
+      className="relative bg-gradient-to-br from-[#2c976a] to-[#247b57] py-20 md:py-20 lg:py-28 -mt-[1px] w-full overflow-hidden"
       initial="initial"
       whileInView="animate"
       viewport={{ once: true, margin: "-50px" }}
@@ -82,7 +83,7 @@ const NosotrosSection = () => {
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#32d28a]/10 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="relative container mx-auto flex flex-col lg:flex-row items-center justify-between px-4 sm:px-6 lg:px-8 w-full gap-8 lg:gap-12">
+      <div className="relative container mx-auto flex flex-col lg:flex-row items-center justify-between px-4 sm:px-6 lg:px-8 w-full gap-12 lg:gap-16 pt-8">
         
         {/* 🔸 Texto principal mejorado */}
         <motion.div
@@ -90,7 +91,7 @@ const NosotrosSection = () => {
           variants={fadeInLeft}
         >
           <motion.div
-            className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white text-sm font-semibold px-4 py-2 rounded-full mb-6"
+            className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white text-sm font-semibold px-4 py-2 rounded-full mb-8"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -101,7 +102,7 @@ const NosotrosSection = () => {
           </motion.div>
 
           <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white mb-4"
+            className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white mb-6"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -109,17 +110,17 @@ const NosotrosSection = () => {
           >
             +95 AÑOS
             <br />
-            <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white/90">
+            <span className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white/90">
               HACIENDO REALIDAD
             </span>
             <br />
-            <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-white/80">
+            <span className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-white/80">
               EL SUEÑO DEL
             </span>
           </motion.h1>
 
           <motion.h2
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#cb4a2a] mt-4 drop-shadow-lg"
+            className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#cb4a2a] mt-6 drop-shadow-lg"
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -130,7 +131,7 @@ const NosotrosSection = () => {
 
           {/* 🔹 Estadísticas */}
           <motion.div
-            className="grid grid-cols-2 gap-4 mt-8"
+            className="grid grid-cols-2 gap-4 mt-10"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -147,8 +148,8 @@ const NosotrosSection = () => {
                   <stat.icon className="w-4 h-4 text-[#2c976a]" />
                 </div>
                 <div>
-                  <div className="text-white font-bold text-lg">{stat.numero}</div>
-                  <div className="text-white/80 text-xs">{stat.texto}</div>
+                  <div className="text-white font-bold text-xl">{stat.numero}</div>
+                  <div className="text-white/80 text-sm">{stat.texto}</div>
                 </div>
               </motion.div>
             ))}
@@ -157,7 +158,7 @@ const NosotrosSection = () => {
 
         {/* 🔸 Imagen con íconos flotantes mejorados */}
         <motion.div
-          className="relative w-full lg:w-1/2 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto flex justify-center items-center"
+          className="relative w-full lg:w-1/2 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto flex justify-center items-center mt-8 lg:mt-0"
           variants={fadeInRight}
         >
           <motion.div
@@ -220,14 +221,14 @@ const NosotrosSection = () => {
 
       {/* 🔹 Llamada a la acción */}
       <motion.div
-        className="relative text-center mt-12"
+        className="relative text-center mt-16"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.8 }}
       >
         <motion.p
-          className="text-white text-lg md:text-xl font-semibold mb-6 max-w-2xl mx-auto leading-relaxed"
+          className="text-white text-xl md:text-xl font-semibold mb-8 max-w-2xl mx-auto leading-relaxed"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -252,14 +253,17 @@ const NosotrosSection = () => {
             Conoce nuestra historia
           </motion.button>
           
-          <motion.button
-            className="border-2 border-white text-white hover:bg-white/10 font-semibold py-3 px-8 rounded-xl backdrop-blur-sm transition-all flex items-center gap-2"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Target className="w-5 h-5" />
-            Nuestros proyectos
-          </motion.button>
+          <Link to="/mapa-lotes">
+            <motion.button
+              className="border-2 border-white text-white hover:bg-white/10 font-semibold py-3 px-8 rounded-xl backdrop-blur-sm transition-all flex items-center gap-2"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Target className="w-5 h-5" />
+              Nuestros proyectos
+            </motion.button>
+          </Link>
+
         </motion.div>
       </motion.div>
     </motion.section>

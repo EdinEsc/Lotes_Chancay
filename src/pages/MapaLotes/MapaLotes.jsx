@@ -13,7 +13,7 @@ import Header from "../../components/Lotes/Header";
 import Propiedad from '../../components/Lotes/Propiedad';
 import Galeria from '../../components/Lotes/Galeria';
 
-// 🔹 Solucionar el problema de iconos por defecto de Leaflet
+// Solucionar el problema de iconos por defecto de Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
@@ -21,7 +21,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-// 🔹 PARÁMETROS CONFIGURABLES POR EL USUARIO
+// PARÁMETROS CONFIGURABLES POR EL USUARIO
 const CONFIGURACION = {
   COLOR_PRINCIPAL: "#2E86AB",
   COLOR_SECUNDARIO: "#4CAF50",
@@ -41,7 +41,7 @@ const CONFIGURACION = {
   SONIDOS: false,
 };
 
-// 🔹 MODOS DE MAPA
+// MODOS DE MAPA
 const MAP_MODES = {
   SATELITE: {
     name: "Satélite",
@@ -75,84 +75,6 @@ const MAP_MODES = {
   }
 };
 
-// 🔹 ESTILOS CSS GLOBALES - ACTUALIZADOS
-const styles = `
-  @keyframes slideInRight {
-    from {
-      transform: translateX(100%);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-  
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-  }
-  
-  .marker:hover {
-    transform: scale(1.2) !important;
-    box-shadow: 
-      0 10px 30px rgba(0,0,0,0.5),
-      inset 0 2px 6px rgba(255,255,255,0.6) !important;
-  }
-  
-  .tooltip {
-    transition: all 0.3s ease !important;
-  }
-  
-  .largest-lot {
-    z-index: 1000 !important;
-  }
-  
-  .large-lot {
-    z-index: 900 !important;
-  }
-
-  /* 🔹 SOLUCIÓN PARA EL PROBLEMA DE SUPERPOSICIÓN */
-  .leaflet-container {
-    height: 100%;
-    width: 100%;
-    border-radius: 15px;
-    z-index: 0 !important;
-  }
-
-  .leaflet-pane {
-    z-index: 0 !important;
-  }
-
-  .leaflet-top,
-  .leaflet-bottom {
-    z-index: 0 !important;
-  }
-
-  .leaflet-control {
-    z-index: 0 !important;
-  }
-
-  /* Asegurar que el mapa no se superponga */
-  .map-container-wrapper {
-    position: relative;
-    z-index: 0;
-  }
-
-  .content-section {
-    position: relative;
-    z-index: 10;
-    background: white;
-  }
-`;
-
-
-
-
-
-
-
-
 const MapaLotes3D = () => {
   const [mapInitialized, setMapInitialized] = useState(false);
   const [selectedLot, setSelectedLot] = useState(null);
@@ -170,7 +92,7 @@ const MapaLotes3D = () => {
   const currentTileLayerRef = useRef(null);
   const markersRef = useRef([]);
 
-  // 🔹 FUNCIÓN PARA CARGAR DATOS DESDE GOOGLE SHEETS
+  // FUNCIÓN PARA CARGAR DATOS DESDE GOOGLE SHEETS
   const fetchLotDataFromGoogleSheets = async () => {
     try {
       setLoading(true);
@@ -192,22 +114,16 @@ const MapaLotes3D = () => {
         throw new Error('No se encontraron datos en el CSV');
       }
 
-      // Transformar datos del CSV al formato que necesita tu aplicación
       const transformedLots = parsedData.map(row => {
-        // Convertir características de string separado por | a array
         const features = row.Caracteristicas ? row.Caracteristicas.split('|').filter(f => f.trim() !== '') : [];
         
-        // Extraer valor numérico del tamaño (eliminar "m²" y espacios)
         const tamañoTexto = row.Tamaño ? row.Tamaño.replace('m²', '').trim() : '0';
         const tamañoNumerico = parseInt(tamañoTexto) || 0;
         
-        // Convertir precio a número
         const precioNumerico = parseInt(row.Precio) || 0;
         
-        // Mapear estado (Vendido, Reservado, Disponible)
         const estado = row.Estado || 'Disponible';
         
-        // Validar coordenadas
         const latitud = parseFloat(row.Latitud);
         const longitud = parseFloat(row.Longitud);
         
@@ -226,7 +142,7 @@ const MapaLotes3D = () => {
           precioNumerico: precioNumerico,
           tamañoNumerico: tamañoNumerico
         };
-      }).filter(lot => lot.id > 0); // Filtrar lotes con ID válido
+      }).filter(lot => lot.id > 0);
 
       console.log('Lotes transformados:', transformedLots);
       setAvailableLots(transformedLots);
@@ -235,7 +151,6 @@ const MapaLotes3D = () => {
       console.error('Error fetching data from Google Sheets:', err);
       setError(`Error al cargar datos: ${err.message}`);
       
-      // Datos de respaldo en caso de error
       const backupLots = [
         {
           id: 1,
@@ -255,18 +170,17 @@ const MapaLotes3D = () => {
     }
   };
 
-  // 🔹 FUNCIÓN PARA PARSEAR CSV
+  // FUNCIÓN PARA PARSEAR CSV
   function parseCSV(csvText) {
     try {
       const rows = csvText.split(/\r?\n/).filter(row => row.trim() !== '');
-      if (rows.length <= 1) return []; // Solo headers o vacío
+      if (rows.length <= 1) return [];
 
       const headers = rows[0].split(',').map(header => header.trim());
       const data = [];
 
       for (let i = 1; i < rows.length; i++) {
         const row = rows[i];
-        // Manejar comas dentro de campos (básico)
         const rowData = [];
         let currentField = '';
         let insideQuotes = false;
@@ -283,7 +197,7 @@ const MapaLotes3D = () => {
             currentField += char;
           }
         }
-        rowData.push(currentField.trim()); // Último campo
+        rowData.push(currentField.trim());
 
         const rowObject = {};
         
@@ -300,12 +214,12 @@ const MapaLotes3D = () => {
     }
   }
 
-  // 🔹 CARGAR DATOS AL MONTAR EL COMPONENTE
+  // CARGAR DATOS AL MONTAR EL COMPONENTE
   useEffect(() => {
     fetchLotDataFromGoogleSheets();
   }, []);
 
-  // 🔹 APLICAR FILTROS
+  // APLICAR FILTROS
   useEffect(() => {
     if (availableLots.length > 0) {
       const filtered = availableLots.filter(lot => 
@@ -318,13 +232,13 @@ const MapaLotes3D = () => {
     }
   }, [mapConfig, availableLots]);
 
-  // 🔹 Encontrar el lote más grande
+  // Encontrar el lote más grande
   const largestLot = filteredLots.length > 0 ? filteredLots.reduce((largest, current) => {
     if (!largest) return current;
     return current.tamañoNumerico > largest.tamañoNumerico ? current : largest;
   }, filteredLots[0]) : null;
 
-  // 🔹 Función para cambiar el modo del mapa
+  // Función para cambiar el modo del mapa
   const changeMapMode = (modeKey) => {
     setCurrentMapMode(modeKey);
     if (mapInstanceRef.current && currentTileLayerRef.current) {
@@ -339,7 +253,7 @@ const MapaLotes3D = () => {
     }
   };
 
-  // 🔹 Función para enfocar en los lotes más grandes
+  // Función para enfocar en los lotes más grandes
   const focusOnLargestLots = () => {
     setViewMode("lotes");
     const largeLots = filteredLots.filter(lot => lot.tamañoNumerico >= 450);
@@ -354,7 +268,7 @@ const MapaLotes3D = () => {
     }
   };
 
-  // 🔹 Función para vista completa del terreno
+  // Función para vista completa del terreno
   const showFullTerrain = () => {
     setViewMode("completo");
     if (mapInstanceRef.current) {
@@ -367,7 +281,7 @@ const MapaLotes3D = () => {
     }
   };
 
-  // 🔹 Función para manejar clic en lote
+  // Función para manejar clic en lote
   const handleLotClick = (lot, event) => {
     if (event) {
       event.originalEvent?.stopPropagation();
@@ -389,7 +303,7 @@ const MapaLotes3D = () => {
     }
   };
 
-  // 🔹 Actualizar configuración
+  // Actualizar configuración
   const updateConfig = (key, value) => {
     setMapConfig(prev => ({
       ...prev,
@@ -397,12 +311,12 @@ const MapaLotes3D = () => {
     }));
   };
 
-  // 🔹 Resetear configuración
+  // Resetear configuración
   const resetConfig = () => {
     setMapConfig(CONFIGURACION);
   };
 
-  // 🔹 Inicializar mapa
+  // Inicializar mapa
   useEffect(() => {
     if (availableLots.length === 0 || loading) return;
 
@@ -437,7 +351,7 @@ const MapaLotes3D = () => {
           keyboard: true
         });
 
-        // 🔹 Capa base inicial
+        // Capa base inicial
         const initialMode = MAP_MODES[currentMapMode];
         const tileLayer = L.tileLayer(initialMode.url, {
           attribution: initialMode.attribution,
@@ -446,7 +360,7 @@ const MapaLotes3D = () => {
 
         currentTileLayerRef.current = tileLayer;
 
-        // 🔹 Polígono principal
+        // Polígono principal
         const mainPolygon = L.geoJSON(terreno.features[0], {
           color: mapConfig.COLOR_SECUNDARIO,
           weight: 5,
@@ -455,13 +369,13 @@ const MapaLotes3D = () => {
           opacity: 0.9,
         }).addTo(map);
 
-        mainPolygon.bindTooltip("🏘️ Urbanización Vista Alegre - Terreno Principal", {
+        mainPolygon.bindTooltip("Urbanización Vista Alegre - Terreno Principal", {
           permanent: false,
           direction: 'center',
           className: 'custom-tooltip'
         });
 
-        // 🔹 Líneas internas como calles
+        // Líneas internas como calles
         terreno.features.slice(1, 15).forEach((feature, index) => {
           L.geoJSON(feature, {
             color: "#FFFFFF",
@@ -471,10 +385,9 @@ const MapaLotes3D = () => {
           }).addTo(map);
         });
 
-        // 🔹 Marcadores
+        // Marcadores
         markersRef.current = [];
         filteredLots.forEach(lot => {
-          // Validar coordenadas
           if (!lot.coordinates || !Array.isArray(lot.coordinates) || lot.coordinates.length !== 2) {
             console.warn(`Coordenadas inválidas para lote ${lot.id}:`, lot.coordinates);
             return;
@@ -523,7 +436,7 @@ const MapaLotes3D = () => {
                   font-size: ${isLargest ? '14px' : '12px'};
                   transition: all 0.3s ease;
                 ">
-                  ${isLargest ? '👑' : lot.id}
+                  ${isLargest ? '' : lot.id}
                   <div style="
                     position: absolute;
                     bottom: -10px;
@@ -559,7 +472,7 @@ const MapaLotes3D = () => {
               max-width: 200px;
             ">
               <div style="color: ${mapConfig.COLOR_PRINCIPAL}; margin-bottom: 6px; font-size: 14px; font-weight: bold;">
-                ${lot.name} ${isLargest ? '🌟' : isLargeLot ? '⭐' : ''}
+                ${lot.name} ${isLargest ? '' : isLargeLot ? '' : ''}
               </div>
               <div style="color: ${lot.status === 'Disponible' ? mapConfig.COLOR_SECUNDARIO : lot.status === 'Reservado' ? '#FF9800' : '#9E9E9E'}; font-size: 11px; margin-bottom: 4px;">
                 ${lot.status} • ${lot.size}
@@ -613,145 +526,84 @@ const MapaLotes3D = () => {
   };
 
   return (
-    <div className="w-full overflow-x-hidden -mt-[80px] sm:-mt-[96px] md:-mt-[112px] lg:-mt-[128px] relative">
-      <style>{styles}</style>
+    <div className="w-full overflow-x-hidden -mt-20 sm:-mt-24 md:-mt-28 lg:-mt-32 relative bg-white">
       
-      {/* 🔹 INDICADORES DE CARGA Y ERROR */}
       {loading && (
-        <div style={{
-          position: 'fixed',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          background: 'rgba(255,255,255,0.95)',
-          padding: '30px',
-          borderRadius: '15px',
-          zIndex: 10000,
-          textAlign: 'center',
-          boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
-          border: `3px solid ${mapConfig.COLOR_PRINCIPAL}`
-        }}>
-          <div style={{ fontSize: '48px', marginBottom: '15px', animation: "pulse 2s infinite" }}>📊</div>
-          <div style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '10px', color: mapConfig.COLOR_PRINCIPAL }}>
+        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/95 p-8 rounded-xl z-[10000] text-center shadow-2xl border-3 backdrop-blur-sm"
+             style={{ borderColor: mapConfig.COLOR_PRINCIPAL }}>
+          <div className="text-5xl mb-4 animate-pulse">📍</div>
+          <div className="text-xl font-bold mb-3" style={{ color: mapConfig.COLOR_PRINCIPAL }}>
             Cargando datos desde Google Sheets...
           </div>
-          <div style={{ fontSize: '14px', color: '#666' }}>
+          <div className="text-gray-600 text-sm">
             Conectando con tu base de datos...
           </div>
         </div>
       )}
 
       {error && (
-        <div style={{
-          position: 'fixed',
-          top: '20px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          background: '#ffebee',
-          color: '#c62828',
-          padding: '15px 20px',
-          borderRadius: '10px',
-          zIndex: 10000,
-          textAlign: 'center',
-          border: '2px solid #c62828',
-          maxWidth: '90%',
-          width: '400px'
-        }}>
-          <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>⚠️ Error de carga</div>
-          <div style={{ marginBottom: '12px', fontSize: '14px' }}>{error}</div>
+        <div className="fixed top-5 left-1/2 transform -translate-x-1/2 bg-red-50 text-red-800 p-4 rounded-xl z-[10000] text-center border-2 border-red-800 max-w-[90%] w-96">
+          <div className="font-bold mb-2">Error de carga</div>
+          <div className="mb-3 text-sm">{error}</div>
           <button 
             onClick={fetchLotDataFromGoogleSheets}
-            style={{ 
-              background: mapConfig.COLOR_PRINCIPAL, 
-              color: 'white', 
-              border: 'none', 
-              padding: '8px 16px', 
-              borderRadius: '5px', 
-              cursor: 'pointer',
-              fontSize: '14px'
-            }}
+            className="text-white px-4 py-2 rounded-lg cursor-pointer text-sm font-medium transition-colors duration-200 hover:opacity-90"
+            style={{ backgroundColor: mapConfig.COLOR_PRINCIPAL }}
           >
             Reintentar
           </button>
         </div>
       )}
 
-      {/* 🔹 SECCIONES DE CONTENIDO CON z-index ALTO */}
-      <div className="relative z-20">
+      <div className="relative z-20 bg-white">
         <SliderFondo />
         <Propiedad />
         <Galeria />
       </div>
 
-      {/* 🔹 CONTENEDOR DEL MAPA CON z-index BAJO */}
-      <section className="relative z-0">
-        <div style={{
-          width: "100%",
-          maxWidth: "1600px",
-          margin: "0 auto",
-          padding: "40px 20px",
-          background: "linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)",
-          flex: 1,
-          display: "flex",
-          flexDirection: "column"
-        }}>
+      <section className="relative z-0 bg-white">
+        <div className="w-full max-w-7xl mx-auto px-5 py-10 bg-white flex-1 flex flex-col">
           
           <Header mapConfig={mapConfig} filteredLots={filteredLots} availableLots={availableLots} loading={loading} />
 
-          {/* 🔹 CONTENEDOR DEL MAPA CON z-index BAJO */}
-          <div className="map-container-wrapper relative z-0">
-            <div style={{ 
-              position: "relative", 
-              width: "100%", 
-              height: "600px",
-              borderRadius: "20px",
-              overflow: "hidden",
-              marginBottom: "40px"
-            }}>
-              
-              {/* Mapa container y loading */}
-              {(!mapInitialized || loading) && (
-                <div style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "100%",
-                  background: `radial-gradient(circle at center, #1a5a7a 0%, ${mapConfig.COLOR_PRINCIPAL} 50%, ${mapConfig.COLOR_SECUNDARIO} 100%)`,
-                  borderRadius: "15px",
-                  border: `3px solid ${mapConfig.COLOR_PRINCIPAL}`
-                }}>
-                  <div style={{
-                    textAlign: "center",
-                    padding: "40px",
-                    color: "white"
-                  }}>
-                    <div style={{ fontSize: "52px", marginBottom: "20px", animation: "pulse 2s infinite" }}>🏘️</div>
-                    <div style={{ fontSize: "26px", fontWeight: "bold", marginBottom: "12px" }}>
-                      Urbanización Vista Alegre
-                    </div>
-                    <div style={{ fontSize: "16px", opacity: 0.9 }}>
-                      {loading ? "Cargando datos..." : "Inicializando mapa..."}
-                    </div>
-                  </div>
-                </div>
-              )}
-              
-              <div
-                ref={mapContainerRef}
-                id="map-container"
-                style={{
-                  height: "100%",
-                  width: "100%",
-                  border: `3px solid ${mapConfig.COLOR_PRINCIPAL}`,
-                  borderRadius: "15px",
-                  boxShadow: `0 25px 70px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2)`,
-                  display: (mapInitialized && !loading) ? "block" : "none",
-                  overflow: "hidden",
-                  position: "relative",
-                  background: `radial-gradient(circle at center, #1a5a7a 0%, ${mapConfig.COLOR_PRINCIPAL} 50%, ${mapConfig.COLOR_SECUNDARIO} 100%)`
-                }}
-                onDoubleClick={handleDoubleClick}
-              />
+          <div className="map-container-wrapper relative z-0 bg-white">
+<div className="relative w-full 
+  h-[70vh]          /* SOLO celular - ahora más alto */
+  min-h-[360px]     /* SOLO celular */
+  sm:h-[500px]      /* Tablet igual que antes */
+  lg:h-[600px]      /* Desktop igual que antes */
+  rounded-2xl overflow-hidden mb-10 bg-white shadow-2xl">
+
+  {(!mapInitialized || loading) && (
+    <div className="flex justify-center items-center h-full rounded-xl backdrop-blur-sm"
+      style={{
+        background: `radial-gradient(circle at center, #1a5a7a 0%, ${mapConfig.COLOR_PRINCIPAL} 50%, ${mapConfig.COLOR_SECUNDARIO} 100%)`,
+        border: `3px solid ${mapConfig.COLOR_PRINCIPAL}`
+      }}>
+      <div className="text-center p-8 sm:p-10 text-white">
+        <div className="text-4xl sm:text-5xl mb-4 sm:mb-5 animate-pulse">🌍</div>
+        <div className="text-xl sm:text-2xl font-bold mb-3">
+          Urbanización Vista Alegre
+        </div>
+        <div className="text-sm sm:text-base opacity-90">
+          {loading ? "Cargando datos..." : "Inicializando mapa..."}
+        </div>
+      </div>
+    </div>
+  )}
+
+  <div
+    ref={mapContainerRef}
+    id="map-container"
+    className="h-full w-full rounded-xl overflow-hidden relative transition-all duration-300"
+    style={{
+      border: `3px solid ${mapConfig.COLOR_PRINCIPAL}`,
+      boxShadow: `0 25px 70px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2)`,
+      display: (mapInitialized && !loading) ? "block" : "none",
+      background: `radial-gradient(circle at center, #1a5a7a 0%, ${mapConfig.COLOR_PRINCIPAL} 50%, ${mapConfig.COLOR_SECUNDARIO} 100%)`
+    }}
+    onDoubleClick={handleDoubleClick}
+  />
 
               <MapModeSelector 
                 currentMapMode={currentMapMode}

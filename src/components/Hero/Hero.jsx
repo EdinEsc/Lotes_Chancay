@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Home, Star, ArrowRight, Users, Trophy } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -32,7 +33,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative w-full h-screen overflow-hidden">
+    <section className="relative w-full min-h-screen overflow-hidden">
       {/* Fondo con gradiente */}
       <div className="absolute inset-0">
         {heroImages.map((image, index) => (
@@ -53,18 +54,18 @@ const Hero = () => {
       </div>
 
       {/* Contenido principal */}
-      <div className="relative z-10 h-full flex items-center">
+      <div className="relative z-10 min-h-screen flex items-center py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-6 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
             
             {/* Texto principal */}
             <motion.div
-              className="text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
+              className="text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)] pt-8 lg:pt-0"
               initial="initial"
               animate="animate"
             >
               <motion.div
-                className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6"
+                className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-8"
                 variants={fadeInUp}
               >
                 <Star className="w-4 h-4 text-yellow-400" fill="currentColor" />
@@ -72,16 +73,16 @@ const Hero = () => {
               </motion.div>
 
               <motion.h1
-                className="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-tight mb-6 text-white"
+                className="text-5xl md:text-5xl lg:text-7xl xl:text-8xl font-extrabold leading-tight mb-8 text-white"
                 variants={slideInLeft}
               >
                 Tu Terreno
-                <span className="block text-[#32d28a] drop-shadow-lg">Tu Futuro</span>
-                <span className="block text-3xl md:text-4xl mt-4 font-semibold text-gray-100">Garantizado</span>
+                <span className="block text-[#32d28a] drop-shadow-lg mt-2">Tu Futuro</span>
+                <span className="block text-3xl md:text-3xl lg:text-4xl mt-6 font-semibold text-gray-100">Garantizado</span>
               </motion.h1>
 
               <motion.p
-                className="text-lg md:text-2xl mb-10 text-gray-200 max-w-2xl leading-relaxed"
+                className="text-xl md:text-xl lg:text-2xl mb-10 text-gray-200 max-w-2xl leading-relaxed"
                 variants={fadeInUp}
               >
                 Construye el hogar de tus sueños con los mejores terrenos
@@ -89,54 +90,58 @@ const Hero = () => {
               </motion.p>
 
               {/* Estadísticas */}
-              <motion.div className="flex flex-wrap gap-8 mb-10" variants={fadeInUp}>
+              <motion.div className="flex flex-wrap gap-6 mb-10" variants={fadeInUp}>
                 {[
                   { icon: Home, number: "5,000+", text: "Lotes Vendidos" },
                   { icon: MapPin, number: "25+", text: "Proyectos" },
                   { icon: Users, number: "50,000+", text: "Familias Felices" }
                 ].map((stat, index) => (
                   <div key={index} className="flex items-center gap-3">
-                    <div className="bg-[#32d28a] p-3 rounded-xl shadow-md">
-                      <stat.icon className="w-5 h-5 text-white" />
+                    <div className="bg-[#32d28a] p-2 lg:p-3 rounded-xl shadow-md">
+                      <stat.icon className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
                     </div>
                     <div>
-                      <div className="text-2xl font-bold text-white">{stat.number}</div>
-                      <div className="text-gray-300 text-sm">{stat.text}</div>
+                      <div className="text-2xl lg:text-2xl font-bold text-white">{stat.number}</div>
+                      <div className="text-gray-300 text-sm lg:text-sm">{stat.text}</div>
                     </div>
                   </div>
                 ))}
               </motion.div>
 
               {/* Botones */}
-              <motion.div className="flex flex-col sm:flex-row gap-4" variants={fadeInUp}>
-                <motion.button
-                  className="bg-[#32d28a] hover:bg-[#27a56f] text-white font-bold py-4 px-10 rounded-xl text-lg shadow-lg transition-all flex items-center justify-center gap-2"
-                  whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(50,210,138,0.5)" }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <ArrowRight className="w-5 h-5" />
-                  ¡Quiero mi Lote!
-                </motion.button>
+              <motion.div className="flex flex-col sm:flex-row gap-4 mb-8 lg:mb-0" variants={fadeInUp}>
+                <Link to="/contacto" className="flex-1">
+                  <motion.button
+                    className="w-full bg-[#32d28a] hover:bg-[#27a56f] text-white font-bold py-4 px-6 lg:px-10 rounded-xl text-lg shadow-lg transition-all flex items-center justify-center gap-2"
+                    whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(50,210,138,0.5)" }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <ArrowRight className="w-5 h-5" />
+                    ¡Quiero mi Lote!
+                  </motion.button>
+                </Link>
 
-                <motion.button
-                  className="bg-white/15 hover:bg-white/30 text-white font-semibold py-4 px-10 rounded-xl text-lg backdrop-blur-md transition-all border border-white/30 flex items-center justify-center gap-2"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <MapPin className="w-5 h-5" />
-                  Ver Proyectos
-                </motion.button>
+                <Link to="/mapa-lotes" className="flex-1">
+                  <motion.button
+                    className="w-full bg-white/15 hover:bg-white/30 text-white font-semibold py-4 px-6 lg:px-10 rounded-xl text-lg backdrop-blur-md transition-all border border-white/30 flex items-center justify-center gap-2"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <MapPin className="w-5 h-5" />
+                    Ver Proyectos
+                  </motion.button>
+                </Link>
               </motion.div>
             </motion.div>
 
-            {/* Tarjeta destacada mejorada */}
+            {/* Tarjeta destacada */}
             <motion.div
-              className="hidden lg:block"
+              className="lg:block mt-16 lg:mt-0 pb-8 lg:pb-0"
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.4 }}
             >
-              <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md ml-auto border border-gray-100">
+              <div className="bg-white rounded-3xl shadow-2xl p-6 lg:p-8 max-w-md mx-auto lg:ml-auto border border-gray-100">
                 {/* Etiqueta superior */}
                 <div className="flex items-center gap-2 bg-[#cb4a2a] text-white text-sm font-bold px-4 py-2 rounded-full inline-flex mb-5 shadow-md">
                   <Trophy className="w-4 h-4" />
@@ -148,44 +153,51 @@ const Hero = () => {
                   <img
                     src="/Home/ChancayProeycto.jpg"
                     alt="Proyecto Destacado"
-                    className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500"
+                    className="w-full h-40 lg:h-48 object-cover hover:scale-105 transition-transform duration-500"
                   />
                 </div>
 
-                {/* Información principal */}
-                <h3 className="text-3xl font-extrabold text-gray-900 mb-1 flex items-center gap-2">
-                  <Home className="w-6 h-6 text-[#2c976a]" />
-                  Chancay 101
+                <h3 className="text-2xl lg:text-3xl font-extrabold text-gray-900 mb-1 flex items-center gap-2">
+                  <Home className="w-5 h-5 lg:w-6 lg:h-6 text-[#2c976a]" />
+                  <span className="text-[#2c976a]">Chancay</span>
+                  <img
+                    src="/Home/101.png"
+                    alt="101"
+                    className="h-6 lg:h-8 object-contain"
+                  />
                 </h3>
-                <p className="text-gray-600 flex items-center gap-2 mb-6">
+
+                <p className="text-gray-600 flex items-center gap-2 mb-6 text-sm lg:text-base">
                   <MapPin className="w-4 h-4 text-[#cb4a2a]" />
                   Lima Norte / Carabayllo
                 </p>
 
                 {/* Datos destacados */}
-                <div className="space-y-4 mb-8">
+                <div className="space-y-4 mb-6 lg:mb-8">
                   <div className="flex justify-between items-center text-gray-700">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 text-sm lg:text-base">
                       <Star className="w-4 h-4 text-[#facc15]" />
                       <span>Desde</span>
                     </div>
-                    <span className="text-[#2c976a] font-bold text-xl">90 m²</span>
+                    <span className="text-[#2c976a] font-bold text-lg lg:text-xl">90 m²</span>
                   </div>
 
                   <div className="flex justify-between items-center text-gray-700">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 text-sm lg:text-base">
                       <Users className="w-4 h-4 text-[#cb4a2a]" />
                       <span>Cuota inicial</span>
                     </div>
-                    <span className="text-[#cb4a2a] font-bold text-xl">S/ 1,978</span>
+                    <span className="text-[#cb4a2a] font-bold text-lg lg:text-xl">S/ 1,978</span>
                   </div>
                 </div>
 
                 {/* Botón CTA */}
-                <button className="w-full bg-[#2c976a] hover:bg-[#247b57] text-white font-semibold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-[#2c976a]/40">
-                  <ArrowRight className="w-5 h-5" />
-                  Solicitar Información
-                </button>
+                <Link to="/contacto">
+                  <button className="w-full bg-[#2c976a] hover:bg-[#247b57] text-white font-semibold py-3 lg:py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-[#2c976a]/40 text-sm lg:text-base">
+                    <ArrowRight className="w-4 h-4 lg:w-5 lg:h-5" />
+                    Solicitar Información
+                  </button>
+                </Link>
               </div>
             </motion.div>
           </div>

@@ -10,7 +10,7 @@ const HeroContacto = () => {
   ];
 
   return (
-    <section className="relative flex items-center justify-center min-h-screen bg-cover bg-center overflow-hidden">
+    <section className="relative flex items-center justify-center min-h-screen bg-cover bg-center overflow-hidden pt-20 pb-20 lg:pt-0 lg:pb-0">
       {/* Imagen de fondo con parallax effect */}
       <motion.div
         className="absolute inset-0 bg-cover bg-center bg-fixed"
@@ -24,7 +24,7 @@ const HeroContacto = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/70" />
 
       {/* Contenido principal MÁS GRANDE Y LLAMATIVO */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-8 pb-8">
         <motion.div
           className="text-white"
           initial={{ opacity: 0, y: 60 }}
@@ -77,7 +77,7 @@ const HeroContacto = () => {
 
           {/* Botones CTA MÁS GRANDES */}
           <motion.div
-            className="flex justify-center gap-6 flex-col sm:flex-row"
+            className="flex justify-center gap-6 flex-col sm:flex-row mb-8"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.9 }}
@@ -94,14 +94,16 @@ const HeroContacto = () => {
               SOLICITAR INFORMACIÓN
             </motion.button>
 
-            <motion.button
-              className="bg-transparent hover:bg-white/20 text-white font-bold py-6 px-12 rounded-2xl border-3 border-white transition-all flex items-center justify-center gap-4 min-w-[240px] text-2xl"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Phone className="w-8 h-8" />
-              LLAMAR AHORA
-            </motion.button>
+            <a href="tel:983722524">
+              <motion.button
+                className="bg-transparent hover:bg-white/20 text-white font-bold py-6 px-12 rounded-2xl border-3 border-white transition-all flex items-center justify-center gap-4 min-w-[240px] text-2xl"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Phone className="w-8 h-8" />
+                LLAMAR AHORA
+              </motion.button>
+            </a>
           </motion.div>
         </motion.div>
       </div>

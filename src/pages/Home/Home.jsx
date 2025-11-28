@@ -5,7 +5,7 @@
 import Testimonios from '../../components/Testimonios/Testimonios';
 import Team from '../../components/Team/Team';
 import Hero from '../../components/Hero/Hero';
-import Formulario from '../../components/Formulario/Formulario';
+// import Formulario from '../../components/Formulario/Formulario';
 import Formulario22 from '../../components/Formulario/Formulario22';
 import Compra from "../../components/Compra/Compra";
 import Noticias from "../../components/Noticias/Noticias";
@@ -24,8 +24,13 @@ const Home = () => {
       </section>
 
       {/* SECCIÓN FORMULARIO */}
-      <section id="formulario">
+      {/* <section id="formulario">
         <Formulario />
+      </section> */}
+
+      {/* SECCIÓN FORMULARIO */}
+      <section id="formulario">
+        <Formulario22 />
       </section>
 
       {/* Otras secciones */}
@@ -50,13 +55,6 @@ const Home = () => {
       {/* Otras secciones */}
       <Noticias />
 
-
-
-
-      {/* SECCIÓN FORMULARIO */}
-      <section id="formulario">
-        <Formulario22 />
-      </section>
 
     </div>
   );

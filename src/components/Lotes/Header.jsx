@@ -1,28 +1,24 @@
 // components/Lotes/Header.jsx
-import React from 'react';
+import React from "react";
+import { Home } from "lucide-react";
 
-const Header = ({ mapConfig, filteredLots }) => {
+const Header = () => {
   return (
-    <div style={{
-      textAlign: "center",
-      marginBottom: "40px",
-      padding: "30px 20px",
-      background: `linear-gradient(135deg, ${mapConfig.COLOR_PRINCIPAL} 0%, #1B5E7A 100%)`,
-      borderRadius: "20px",
-      boxShadow: "0 15px 40px rgba(0,0,0,0.2)",
-      color: "white",
-      border: `3px solid ${mapConfig.COLOR_SECUNDARIO}`,
-      position: "relative",
-      zIndex: 10
-    }}>
-      <h1 style={{
-        fontSize: "3.2rem",
-        fontWeight: "bold",
-        marginBottom: "15px",
-        textShadow: "2px 2px 4px rgba(0,0,0,0.3)"
-      }}>
-        🏘️ ELIGE TU TERRENO HOY
-      </h1>
+    <div className="text-center mb-10 px-4">
+      <div className="flex items-center justify-center gap-4">
+        <Home className="w-12 h-12" style={{ color: "#cb4a2a" }} />
+
+        <h1
+          className="text-4xl md:text-5xl font-extrabold tracking-wide"
+          style={{ color: "#cb4a2a" }}
+        >
+          Elige tu terreno ideal
+        </h1>
+      </div>
+
+      <p className="mt-3 text-lg font-medium opacity-80">
+        Disponibilidad actualizada en tiempo real
+      </p>
     </div>
   );
 };
