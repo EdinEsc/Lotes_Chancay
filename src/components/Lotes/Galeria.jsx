@@ -5,12 +5,15 @@ const Galeria = () => {
   
   // Datos de ejemplo para las fotos
   const fotos = [
-    { id: 1, src: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", alt: "Vista del proyecto" },
-    { id: 2, src: "https://images.unsplash.com/photo-1574362848149-11496d93a7c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", alt: "Área común" },
-    { id: 3, src: "https://images.unsplash.com/photo-1513584684374-8bab748fbf90?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", alt: "Losa deportiva" },
-    { id: 4, src: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", alt: "Juegos infantiles" },
-    { id: 5, src: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", alt: "Entrada principal" },
-    { id: 6, src: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", alt: "Terreno disponible" }
+    { id: 1, src: "Lotes/1.jpg", alt: "Vista del proyecto" },
+    { id: 2, src: "Lotes/2.jpg", alt: "Área común" },
+    { id: 3, src: "Lotes/3.jpg", alt: "Losa deportiva" },
+    { id: 4, src: "Lotes/4.jpg", alt: "Juegos infantiles" },
+    { id: 5, src: "Lotes/5.jpg", alt: "Entrada principal" },
+    { id: 6, src: "Lotes/6.jpg", alt: "Terreno disponible" },
+    { id: 7, src: "Lotes/7.jpg", alt: "Terreno disponible" },
+    { id: 8, src: "Lotes/8.jpg", alt: "Terreno disponible" },
+    { id: 9, src: "Lotes/9.jpg", alt: "Terreno disponible" }
   ];
 
   return (

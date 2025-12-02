@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from "react-router-dom";
 
 const Team = () => {
   // Animaciones
@@ -102,17 +103,20 @@ const Team = () => {
             ¡Haz una compra 100% segura con Centenario!
             </motion.p>
             
-            <motion.button 
-              className="cursor-pointer py-3 px-8 w-60 bg-[#cb4a2a] text-white text-base font-semibold transition-all duration-500 block text-center rounded-full hover:bg-[#a23b21] mx-auto lg:mx-0"
-              variants={fadeInUp}
-              whileHover={{ 
-                scale: 1.05, 
-                boxShadow: "0 10px 25px rgba(203, 74, 42, 0.3)" 
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              ¡Conocer mas!
-            </motion.button>
+<Link to="/conocenos/nosotros">
+  <motion.button
+    className="cursor-pointer py-3 px-8 w-60 bg-[#cb4a2a] text-white text-base font-semibold transition-all duration-500 block text-center rounded-full hover:bg-[#a23b21] mx-auto lg:mx-0"
+    variants={fadeInUp}
+    whileHover={{ 
+      scale: 1.05, 
+      boxShadow: "0 10px 25px rgba(203, 74, 42, 0.3)" 
+    }}
+    whileTap={{ scale: 0.95 }}
+  >
+    ¡Conocer más!
+  </motion.button>
+</Link>
+
           </motion.div>
 
           {/* Columna derecha - Grid de imágenes */}

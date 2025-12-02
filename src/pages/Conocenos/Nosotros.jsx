@@ -4,8 +4,8 @@
 // import HeroSection from "../../components/Nosotros/HeroSection";
 import NosotrosSection from "../../components/Nosotros/NosotrosSection";
 import BeneficiosSection from "../../components/Nosotros/BeneficiosSection";
-import SeccionFamiliasFelices from "../../components/Nosotros/SeccionFamiliasFelices";
-import SeccionLineaDeTiempo from "../../components/Nosotros/SeccionLineaDeTiempo";
+// import SeccionFamiliasFelices from "../../components/Nosotros/SeccionFamiliasFelices";
+// import SeccionLineaDeTiempo from "../../components/Nosotros/SeccionLineaDeTiempo";
 import SeccionMisionVision from "../../components/Nosotros/SeccionMisionVision";
 import BlogPie from "../../components/Blog/Blogpie";
 
@@ -19,9 +19,9 @@ return (
         
       <BeneficiosSection />
 
-      <SeccionFamiliasFelices />
+      {/* <SeccionFamiliasFelices /> */}
 
-      <SeccionLineaDeTiempo />
+      {/* <SeccionLineaDeTiempo /> */}
 
       <SeccionMisionVision />
 

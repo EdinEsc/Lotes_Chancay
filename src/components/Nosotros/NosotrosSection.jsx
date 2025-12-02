@@ -62,12 +62,12 @@ const NosotrosSection = () => {
     { bottom: "10%", left: "50%", transform: "translateX(-50%)", icon: <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />, color: "bg-[#cb4a2a] text-white" }
   ];
 
-  const estadisticas = [
-    { numero: "95+", texto: "Años de experiencia", icon: Calendar },
-    { numero: "25+", texto: "Proyectos ejecutados", icon: Building2 },
-    { numero: "5,000+", texto: "Familias beneficiadas", icon: Users },
-    { numero: "100%", texto: "Títulos registrados", icon: ShieldCheck }
-  ];
+  // const estadisticas = [
+  //   { numero: "95+", texto: "Años de experiencia", icon: Calendar },
+  //   { numero: "25+", texto: "Proyectos ejecutados", icon: Building2 },
+  //   { numero: "5,000+", texto: "Familias beneficiadas", icon: Users },
+  //   { numero: "100%", texto: "Títulos registrados", icon: ShieldCheck }
+  // ];
 
   return (
     <motion.section
@@ -130,7 +130,7 @@ const NosotrosSection = () => {
           </motion.h2>
 
           {/* 🔹 Estadísticas */}
-          <motion.div
+          {/* <motion.div
             className="grid grid-cols-2 gap-4 mt-10"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -153,7 +153,7 @@ const NosotrosSection = () => {
                 </div>
               </motion.div>
             ))}
-          </motion.div>
+          </motion.div> */}
         </motion.div>
 
         {/* 🔸 Imagen con íconos flotantes mejorados */}

@@ -40,7 +40,7 @@ const Formulario = () => {
     });
   };
 
-  // 🔹 Enviar datos al Google Sheets
+  // 🔹 Enviar datos SOLO a FormSubmit
   const handleSubmit = async (e) => {
     e.preventDefault();
     setCargando(true);
@@ -53,36 +53,41 @@ const Formulario = () => {
     }
 
     try {
-      const scriptURL =
-        "https://script.google.com/macros/s/AKfycbxUVVWPMYV3lOnGUgnXT_vbxfiGim2Pjr6LLrq1tc6OndDe7enPihA2Vom9oEi3I2fl/exec";
-
-      const formDataToSend = new FormData();
-      Object.entries(formData).forEach(([key, value]) =>
-        formDataToSend.append(key, value)
-      );
-
-      const response = await fetch(scriptURL, {
-        method: "POST",
-        body: formDataToSend,
+      const formDataEmail = new FormData();
+      
+      // Agregamos todos los campos del formulario
+      Object.entries(formData).forEach(([key, value]) => {
+        if (value !== '') {
+          formDataEmail.append(key, value.toString());
+        }
       });
 
-      const text = await response.text();
-      console.log("Respuesta del servidor:", text);
+      // Configuración para FormSubmit
+      formDataEmail.append("_subject", "Nuevo contacto desde Formulario - Información de Terrenos");
+      formDataEmail.append("_captcha", "false");
+      formDataEmail.append("_template", "table");
+      formDataEmail.append("_autoresponse", "¡Gracias por tu interés! Te contactaremos pronto con información sobre nuestros terrenos.");
+      
+      const response = await fetch("https://formsubmit.co/ajax/eescobarc@autonoma.edu.pe", {
+        method: "POST",
+        body: formDataEmail,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
 
-      if (
-        text.includes("OK") ||
-        text.includes("Success") ||
-        response.status === 0
-      ) {
+      if (response.ok) {
+        const result = await response.json();
+        console.log("✅ Email enviado:", result);
         setMensaje("✅ ¡Tu información se envió correctamente! Te contactaremos pronto.");
         limpiarFormulario();
       } else {
-        setMensaje("⚠️ Datos enviados, pero hubo un problema con la respuesta del servidor.");
+        throw new Error(`Error HTTP: ${response.status}`);
       }
+
     } catch (error) {
       console.error("Error:", error);
-      setMensaje("✅ ¡Tu información se envió correctamente! Te contactaremos pronto.");
-      limpiarFormulario();
+      setMensaje("❌ Error al enviar. Por favor, intenta nuevamente o contáctanos directamente.");
     } finally {
       setCargando(false);
       setTimeout(() => setMensaje(""), 5000);
@@ -241,7 +246,12 @@ const Formulario = () => {
 
         {/* 🔹 Mensaje visual */}
         {mensaje && (
-          <p className="text-center text-sm font-medium text-green-700 mt-2">
+          <p className={`text-center text-sm font-medium mt-2 ${
+            mensaje.includes("✅") ? "text-green-700" : 
+            mensaje.includes("⚠️") ? "text-yellow-700" : 
+            mensaje.includes("❌") ? "text-red-700" : 
+            "text-blue-700"
+          }`}>
             {mensaje}
           </p>
         )}

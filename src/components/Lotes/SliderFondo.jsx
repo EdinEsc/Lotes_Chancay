@@ -47,20 +47,20 @@ const SliderFondo = () => {
       <div className="absolute bottom-0 left-0 w-full flex text-white text-center font-semibold">
         {/* Parte verde */}
         <div className="w-1/2 bg-[#2c976a]/90 py-6 flex flex-col justify-center items-center space-y-2">
-          <p className="text-sm uppercase tracking-wide">Urbanización</p>
-          <h3 className="text-2xl font-bold">Brisas de Huanchaco</h3>
+          <p className="text-sm uppercase tracking-wide">Sala de ventas</p>
+          <h3 className="text-2xl font-bold">Alfredo AMendiola</h3>
 
           {/* Precio en horizontal */}
           <div className="flex items-baseline space-x-2 mt-2">
-            <p className="text-base">Cuotas desde</p>
-            <span className="text-4xl font-extrabold">S/1,525</span>
+            <p className="text-base">Terrenos des de:</p>
+            <span className="text-4xl font-extrabold">S/17,200</span>
           </div>
         </div>
 
         {/* Parte naranja */}
         <div className="w-1/2 bg-[#cb4a2a]/90 py-6 flex flex-col justify-center items-center space-y-2">
           <h3 className="text-2xl font-bold">Precios de lanzamiento</h3>
-          <p className="text-base">Trujillo / Huanchaco</p>
+          <p className="text-base">Lima Norte</p>
         </div>
       </div>
     </div>

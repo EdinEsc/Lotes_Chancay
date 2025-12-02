@@ -137,48 +137,6 @@ const Formulario = () => {
       {/* ✅ Contenedor general (grid responsivo) */}
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center px-4 sm:px-6 lg:px-8 relative overflow-visible">
 
-        {/* 🔸 Tarjeta naranja (izquierda, ancho total en escritorio) */}
-        <motion.div 
-          className="bg-[#cb4a2a] rounded-2xl shadow-2xl flex items-center justify-center p-6 sm:p-8 md:p-10 overflow-visible"
-          variants={fadeInLeft}
-          whileHover={{ scale: 1.02 }}
-          transition={{ type: "spring", stiffness: 300 }}
-          style={{
-            width: "100vw",
-            minHeight: "400px",
-            position: "relative",
-            left: "calc(-50vw + 50%)",
-          }}
-        >
-          {/* Contenido interno responsivo */}
-          <div className="flex flex-col items-center md:items-start text-center md:text-left relative z-10 w-full max-w-2xl md:ml-10 lg:ml-16">
-            
-            {/* Tarjeta verde con texto */}
-            <motion.div 
-              className="relative bg-[#2c976a] text-white px-6 sm:px-8 py-5 sm:py-6 rounded-2xl shadow-lg mb-8 w-fit
-                        before:absolute before:content-[''] before:-bottom-4 before:left-1/2 
-                        before:-translate-x-1/2 before:w-0 before:h-0 before:border-l-[14px] sm:before:border-l-[18px]
-                        before:border-r-[14px] sm:before:border-r-[18px] before:border-t-[16px] sm:before:border-t-[18px]
-                        before:border-l-transparent before:border-r-transparent before:border-t-[#2c976a]"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: 'spring', stiffness: 300 }}
-            >
-              <h2 className="text-lg sm:text-xl md:text-2xl font-bold leading-snug max-w-[17rem] sm:max-w-xs md:max-w-sm">
-                ¡ESTÁS A UN PASO DE TENER<br />EL TERRENO PARA TU FAMILIA!
-              </h2>
-            </motion.div>
-
-            {/* Imagen responsiva */}
-            <motion.img
-              src="/Home/ChancayDatos.png"
-              alt="Personas felices"
-              className="w-56 sm:w-72 md:w-80 lg:w-96 transition-transform duration-300 ease-in-out hover:scale-105"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            />
-          </div>
-        </motion.div>
-
         {/* 🔹 Formulario */}
         <motion.div 
           className="bg-white shadow-xl rounded-2xl p-6 sm:p-8 md:p-10 border border-green-300 relative z-20 ml-auto w-full"
@@ -379,6 +337,8 @@ const Formulario = () => {
             </motion.button>
           </form>
         </motion.div>
+
+
       </div>
     </motion.section>
   );

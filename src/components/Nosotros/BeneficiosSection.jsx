@@ -251,7 +251,7 @@ const BeneficiosSection = () => {
         </motion.div>
 
         {/* 🔸 Llamada a la acción */}
-        <motion.div
+        {/* <motion.div
           className="text-center mt-16 lg:mt-20"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -286,7 +286,7 @@ const BeneficiosSection = () => {
                 </motion.button>
               </Link>
               
-              {/* 🔹 Botón que abre el modal */}
+             
               <motion.button
                 onClick={() => setMostrarSimulador(true)}
                 className="border-2 border-[#2c976a] text-[#2c976a] hover:bg-[#2c976a] hover:text-white font-semibold py-4 px-8 rounded-xl transition-all flex items-center justify-center gap-3"
@@ -298,11 +298,11 @@ const BeneficiosSection = () => {
               </motion.button>
             </div>
           </motion.div>
-        </motion.div>
+        </motion.div> */}
       </div>
 
       {/* 🔹 Modal del simulador FUNCIONAL */}
-      {mostrarSimulador && (
+      {/* {mostrarSimulador && (
         <motion.div
           className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
           initial={{ opacity: 0 }}
@@ -317,7 +317,7 @@ const BeneficiosSection = () => {
             transition={{ type: "spring", damping: 25 }}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Botón de cerrar */}
+          
             <button
               onClick={() => setMostrarSimulador(false)}
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors z-10 bg-white rounded-full p-1"
@@ -325,7 +325,7 @@ const BeneficiosSection = () => {
               <X className="w-6 h-6" />
             </button>
 
-            {/* Contenido del modal */}
+           
             <div className="p-6">
               <div className="text-center mb-6">
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-[#2c976a] text-white rounded-full mb-3">
@@ -339,9 +339,9 @@ const BeneficiosSection = () => {
                 </p>
               </div>
 
-              {/* Formulario del simulador */}
+              
               <div className="space-y-4">
-                {/* Valor del terreno */}
+               
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
                     <DollarSign className="w-4 h-4" />
@@ -369,7 +369,7 @@ const BeneficiosSection = () => {
                   </div>
                 </div>
 
-                {/* Cuota inicial */}
+               
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
                     <Percent className="w-4 h-4" />
@@ -397,7 +397,7 @@ const BeneficiosSection = () => {
                   </div>
                 </div>
 
-                {/* Plazo de pago */}
+                
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
@@ -426,7 +426,7 @@ const BeneficiosSection = () => {
                   </div>
                 </div>
 
-                {/* Resultados */}
+                
                 <div className="bg-gradient-to-br from-[#2c976a] to-[#32d28a] text-white p-6 rounded-2xl space-y-3">
                   <div className="text-center">
                     <p className="text-sm font-medium opacity-90">Tu cuota mensual será de</p>
@@ -445,7 +445,7 @@ const BeneficiosSection = () => {
                   </div>
                 </div>
 
-                {/* Información adicional */}
+                
                 <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
                   <div className="flex items-start gap-3">
                     <div className="flex-shrink-0">
@@ -462,7 +462,7 @@ const BeneficiosSection = () => {
                   </div>
                 </div>
 
-                {/* Botones de acción */}
+              
                 <div className="space-y-3">
                 <Link to="/contacto">
                   <motion.button
@@ -489,7 +489,7 @@ const BeneficiosSection = () => {
             </div>
           </motion.div>
         </motion.div>
-      )}
+      )} */}
     </motion.section>
   );
 };

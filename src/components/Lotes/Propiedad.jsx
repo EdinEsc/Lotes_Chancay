@@ -5,19 +5,19 @@ import { useNavigate } from "react-router-dom"; // 👈 IMPORTANTE
 const Propiedad = () => {
   const navigate = useNavigate(); // 👈 inicializamos navigate
 
-  const beneficios = [
-    "Entorno urbano planificado",
-    "Pórtico de ingreso con seguridad",
-    "Cerco perimétrico completo",
-    "Áreas de recreación y esparcimiento",
-    "Parque infantil con juegos",
-    "Servicios completos (agua, luz, desagüe)"
-  ];
+  // const beneficios = [
+  //   "Entorno urbano planificado",
+  //   "Pórtico de ingreso con seguridad",
+  //   "Cerco perimétrico completo",
+  //   "Áreas de recreación y esparcimiento",
+  //   "Parque infantil con juegos",
+  //   "Servicios completos (agua, luz, desagüe)"
+  // ];
 
   const caracteristicas = [
-    { icon: MapPin, text: "Avenida San Isidro, frente al parque José de San Martín" },
-    { icon: Ruler, text: "Terrenos desde 90m² hasta 200m²" },
-    { icon: Navigation, text: "A 2 cuadras del Malecón Miranda" }
+    { icon: MapPin, text: "A 20 min. del Mega Puerto de Chancay en el KM101 de la Panamericana Norte" },
+    { icon: Ruler, text: "Terrenos desde 90m² y 150m²" },
+    { icon: Navigation, text: "A 5 min. de playa pescadores" }
   ];
 
   const IconItem = ({ Icon, text }) => (
@@ -59,23 +59,23 @@ const Propiedad = () => {
       </div>
 
       {/* Descripción destacada */}
-      <div className="bg-white rounded-2xl shadow-xl p-8 md:p-10 border border-gray-200">
+      {/* <div className="bg-white rounded-2xl shadow-xl p-8 md:p-10 border border-gray-200"> */}
         <div className="max-w-4xl mx-auto text-center space-y-6">
           <p className="text-gray-700 leading-relaxed text-lg md:text-xl">
             <span className="font-bold text-[#cb4a2a]">Oportunidad única:</span> Adquiera su terreno desde{" "}
-            <span className="font-bold text-[#2c976a]">90 m²</span> en <span className="font-bold text-[#2c976a]">Veldmar</span>, 
-            la urbanización más exclusiva de Centenario en Pisco. 
+            <span className="font-bold text-[#2c976a]">90 m²</span> con <span className="font-bold text-[#2c976a]">Chancay 101</span>, 
+            la urbanización más exclusiva por la panamericana Norte. 
           </p>
-          <p className="text-gray-700 leading-relaxed text-lg md:text-xl">
-            Ubicación estratégica a solo <span className="font-bold">2 cuadras del Malecón Miranda</span>, 
-            con pórtico de ingreso monumental, amplias áreas verdes y todos los servicios implementados. 
-            Un proyecto diseñado para familias que buscan calidad de vida y plusvalía inmediata.
-          </p>
+          {/* <p className="text-gray-700 leading-relaxed text-lg md:text-xl">
+            Vive en una ubicación estratégica, cerca del <span className="font-bold">Puerto de Chancay</span> y con fácil acceso a las playas y a las principales vías de Lima Norte. 
+            Un proyecto pensado para familias que buscan comodidad, seguridad y calidad de vida, con amplias áreas verdes y todos los servicios implementados. 
+            Además, una inversión con <span className="font-bold">plusvalía garantizada</span> en una zona de alto crecimiento.
+          </p> */}
         </div>
-      </div>
+      {/* </div> */}
 
       {/* Beneficios */}
-      <div className="max-w-5xl mx-auto">
+      {/* <div className="max-w-5xl mx-auto">
         <h3 className="text-[#2c976a] font-bold text-2xl md:text-3xl text-center mb-12">
           ¡Incluye todo lo que tu familia necesita!
         </h3>
@@ -92,10 +92,10 @@ const Propiedad = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Call to Action */}
-      <div className="text-center bg-gradient-to-r from-[#2c976a] to-[#1e6b4e] rounded-2xl p-8 md:p-10 text-white shadow-2xl">
+      {/* <div className="text-center bg-gradient-to-r from-[#2c976a] to-[#1e6b4e] rounded-2xl p-8 md:p-10 text-white shadow-2xl">
         <h3 className="text-2xl md:text-3xl font-bold mb-4">
           ¡Oportunidad limitada!
         </h3>
@@ -108,7 +108,7 @@ const Propiedad = () => {
         >
           Solicitar información
         </button>
-      </div>
+      </div> */}
     </section>
   );
 };
