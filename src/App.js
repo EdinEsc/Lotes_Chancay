@@ -6,8 +6,6 @@ import WhatsAppButton from "./components/WhatsAppButton";
 // Páginas
 import Home from "./pages/Home/Home";
 import Nosotros from "./pages/Conocenos/Nosotros";
-import Blog from "./pages/Blog/Blog";
-import BlogDetalle from "./pages/Blog/BlogDetalle"; // 👈 Nueva vista de detalle
 import Contacto from "./pages/Contacto/Contacto";
 import MapaLotes from "./pages/MapaLotes/MapaLotes";
 import './App.css';
@@ -24,8 +22,6 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/conocenos" element={<Nosotros />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:id" element={<BlogDetalle />} /> {/* 👈 Nueva ruta */}
             <Route path="/contacto" element={<Contacto />} />
             <Route path="/mapa-lotes" element={<MapaLotes />} />
           </Routes>
