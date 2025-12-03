@@ -244,26 +244,18 @@ const NosotrosSection = () => {
           viewport={{ once: true }}
           transition={{ delay: 1.2 }}
         >
-          <motion.button
-            className="bg-white text-[#2c976a] hover:bg-gray-100 font-bold py-3 px-8 rounded-xl shadow-lg transition-all flex items-center gap-2"
-            whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(255,255,255,0.3)" }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Handshake className="w-5 h-5" />
-            Conoce nuestra historia
-          </motion.button>
-          
-          <Link to="/mapa-lotes">
-            <motion.button
-              className="border-2 border-white text-white hover:bg-white/10 font-semibold py-3 px-8 rounded-xl backdrop-blur-sm transition-all flex items-center gap-2"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Target className="w-5 h-5" />
-              Nuestros proyectos
-            </motion.button>
-          </Link>
-
+        <motion.button
+          onClick={() => {
+            const section = document.getElementById("mision");
+            section?.scrollIntoView({ behavior: "smooth" });
+          }}
+          className="bg-white text-[#2c976a] hover:bg-gray-100 font-bold py-3 px-8 rounded-xl shadow-lg transition-all flex items-center gap-2"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Handshake className="w-5 h-5" />
+          Conoce nuestra Mision y Vision
+        </motion.button>
         </motion.div>
       </motion.div>
     </motion.section>

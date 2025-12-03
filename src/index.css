@@ -27,6 +27,27 @@ code {
 /* Para asegurar que los submenús se vean bien */
 .submenu-backdrop {
   background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
-  /* backdrop-filter: blur(12px); */
   border: 1px solid rgba(255,255,255,0.3);
+}
+
+/* ====================================================== */
+/* ===== FIX PARA QUE LEAFLET NO SE SUBA AL HEADER ===== */
+/* ====================================================== */
+
+.leaflet-container {
+  z-index: 0 !important;
+}
+
+.leaflet-pane,
+.leaflet-tile,
+.leaflet-marker-pane,
+.leaflet-shadow-pane,
+.leaflet-overlay-pane,
+.leaflet-tooltip-pane,
+.leaflet-popup-pane {
+  z-index: 0 !important;
+}
+
+.leaflet-control-container {
+  z-index: 1 !important;
 }

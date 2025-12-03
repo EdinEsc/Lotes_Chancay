@@ -60,6 +60,7 @@ const SeccionMisionVision = () => {
 
   return (
     <motion.section
+      id="mision"
       className="relative py-16 md:py-24 lg:py-28 overflow-hidden"
       initial="initial"
       whileInView="animate"

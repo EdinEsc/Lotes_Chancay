@@ -40,8 +40,9 @@ export default function AFPSection() {
             Mientras esperas, un terreno puede ser la inversión que se multiplica más rápido.
           </p>
 
-          {/* Video */}
+          {/* ----------- VIDEO ----------- */}
           <div className="w-full max-w-sm sm:max-w-md mx-auto relative">
+
             {!isPlaying && (
               <div className="relative cursor-pointer" onClick={handlePlay}>
                 <img
@@ -60,9 +61,15 @@ export default function AFPSection() {
             <video
               ref={videoRef}
               className={`w-full h-auto object-cover rounded-xl ${isPlaying ? "block" : "hidden"}`}
-              controls
               src="/Home/afp-video.mp4"
               onEnded={handleEnded}
+
+              // 🔥🔥 EVITAR PANTALLA COMPLETA EN CELULAR 🔥🔥
+              playsInline
+              webkit-playsinline="true"
+              x5-playsinline="true"
+              controls
+              controlsList="nofullscreen nodownload"
             />
           </div>
 
