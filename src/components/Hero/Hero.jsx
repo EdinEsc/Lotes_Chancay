@@ -194,30 +194,23 @@ const Hero = () => {
                 Cuota inicial del 50%
               </motion.div>
 
-              {/* Botones */}
-              <motion.div className="flex flex-col sm:flex-row gap-4 mb-8 lg:mb-0" variants={fadeInUp}>
-                <Link to="/contacto" className="flex-1">
-                  <motion.button
-                    className="w-full bg-[#32d28a] hover:bg-[#27a56f] text-white font-bold py-4 px-6 lg:px-10 rounded-xl text-lg shadow-lg transition-all flex items-center justify-center gap-2"
-                    whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(50,210,138,0.5)" }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <ArrowRight className="w-5 h-5" />
-                    ¡Quiero mi Lote!
-                  </motion.button>
-                </Link>
+            {/* Botones */}
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-4 mb-8 lg:mb-0 justify-center" 
+              variants={fadeInUp}
+            >
+              <Link to="/contacto">
+                <motion.button
+                  className="bg-[#32d28a] hover:bg-[#27a56f] text-white font-bold py-3 px-4 lg:px-6 rounded-xl text-base shadow-lg transition-all flex items-center justify-center gap-2"
+                  whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(50,210,138,0.5)" }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <ArrowRight className="w-5 h-5" />
+                  ¡Quiero mi Lote!
+                </motion.button>
+              </Link>
+            </motion.div>
 
-                <Link to="/mapa-lotes" className="flex-1">
-                  <motion.button
-                    className="w-full bg-white/15 hover:bg-white/30 text-white font-semibold py-4 px-6 lg:px-10 rounded-xl text-lg backdrop-blur-md transition-all border border-white/30 flex items-center justify-center gap-2"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <MapPin className="w-5 h-5" />
-                    Ver Proyectos
-                  </motion.button>
-                </Link>
-              </motion.div>
             </motion.div>
 
             {/* Formulario a la derecha - Movido MUCHO más a la derecha */}
