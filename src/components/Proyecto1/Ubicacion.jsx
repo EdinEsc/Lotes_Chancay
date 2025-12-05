@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { Play, MapPin, Navigation } from "lucide-react";
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import { Play, MapPin, Navigation, X } from "lucide-react";
+import { MapContainer, TileLayer, Marker, Polyline, useMap } from "react-leaflet";
 import L from "leaflet";
 
 const fadeInLeft = {
@@ -19,13 +19,28 @@ const staggerContainer = {
   animate: { transition: { staggerChildren: 0.2 } },
 };
 
-// Ícono personalizado
+// Ícono personalizado del marcador
 const redMarkerIcon = L.icon({
   iconUrl: "/Home/red-location.png",
   iconSize: [45, 45],
   iconAnchor: [22, 45],
   popupAnchor: [0, -45],
 });
+
+// 🔄 Componente para RECENTRAR MAPA
+function ResetCenterView({ coords }) {
+  const map = useMap();
+
+  return (
+    <button
+      onClick={() => map.setView(coords, 16)}
+      className="absolute bottom-4 left-4 flex items-center gap-2 bg-[#2c976a] text-white font-semibold text-xs sm:text-sm px-3 py-2 rounded-full shadow-lg z-[9999] font-[Poppins]"
+    >
+      <MapPin className="w-4 h-4" />
+      Regresar
+    </button>
+  );
+}
 
 const Ubicacion = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -34,34 +49,34 @@ const Ubicacion = () => {
   const proyectoLat = -11.43695054956325;
   const proyectoLng = -77.36357859322175;
 
-  // CÓMO LLEGAR
+  const [ruta, setRuta] = useState([]);
+
+  // 🚗 CÓMO LLEGAR (ruta interna)
   const handleComoLlegar = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const userLat = pos.coords.latitude;
-          const userLng = pos.coords.longitude;
+    if (!navigator.geolocation) return alert("No pudimos obtener tu ubicación.");
 
-          window.open(
-            `https://www.google.com/maps/dir/${userLat},${userLng}/${proyectoLat},${proyectoLng}`,
-            "_blank"
-          );
-        },
-        () => {
-          alert("No pudimos obtener tu ubicación. Puedes ingresar una manual.");
-          const ubicacionManual = prompt("Ingresa tu ubicación (ej: Lima, Perú):");
+    navigator.geolocation.getCurrentPosition(async (pos) => {
+      const user = [pos.coords.latitude, pos.coords.longitude];
+      const destino = [proyectoLat, proyectoLng];
 
-          if (ubicacionManual) {
-            window.open(
-              `https://www.google.com/maps/dir/${encodeURIComponent(
-                ubicacionManual
-              )}/${proyectoLat},${proyectoLng}`,
-              "_blank"
-            );
-          }
-        }
-      );
-    }
+      const url = `https://router.project-osrm.org/route/v1/driving/${user[1]},${user[0]};${destino[1]},${destino[0]}?overview=full&geometries=geojson`;
+
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (!data.routes?.length) {
+        alert("No se pudo calcular la ruta.");
+        return;
+      }
+
+      const coords = data.routes[0].geometry.coordinates.map((c) => [c[1], c[0]]);
+      setRuta(coords);
+    });
+  };
+
+  // ❌ LIMPIAR RUTA Y RESTAURAR
+  const handleLimpiarRuta = () => {
+    setRuta([]);
   };
 
   const handlePlay = () => {
@@ -75,14 +90,14 @@ const Ubicacion = () => {
 
   return (
     <motion.section
-      className="relative bg-gradient-to-br from-white to-gray-50 py-16 md:py-24 lg:py-28 overflow-hidden"
+      className="relative bg-gradient-to-br from-white to-gray-50 py-16 md:py-24 lg:py-28 overflow-hidden font-[Poppins]"
       initial="initial"
       whileInView="animate"
       viewport={{ once: true, margin: "-50px" }}
       variants={staggerContainer}
     >
       {/* Fondo */}
-      <div className="absolute inset-0 overflow-hidden -z-10">
+      <div className="absolute inset-0 overflow-hidden -z-0">
         <img
           src="/Home/chay2.jpg"
           className="absolute inset-0 w-full h-full object-cover opacity-80"
@@ -106,63 +121,73 @@ const Ubicacion = () => {
               y los principales accesos del norte chico.
             </p>
 
+            {/* MAPA */}
+            <motion.div className="w-full pt-6 relative" variants={fadeInLeft}>
+              <div className="w-full h-72 sm:h-80 md:h-96 lg:h-[450px] rounded-2xl overflow-hidden shadow-xl border-2 border-white/40 relative z-0">
 
-          {/* MAPA */}
-          <motion.div className="w-full pt-6 relative" variants={fadeInLeft}>
+                <MapContainer
+                  center={[proyectoLat, proyectoLng]}
+                  zoom={16}
+                  scrollWheelZoom={true}
+                  className="w-full h-full rounded-2xl"
+                >
+                  <TileLayer
+                    attribution="&copy; OpenStreetMap"
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  />
 
-            <div className="w-full h-72 sm:h-80 md:h-96 lg:h-[450px] rounded-2xl overflow-hidden shadow-xl border-2 border-white/40 relative z-0">
+                  <Marker position={[proyectoLat, proyectoLng]} icon={redMarkerIcon} />
 
-              <MapContainer
-                center={[proyectoLat, proyectoLng]}
-                zoom={16}
-                scrollWheelZoom={true}
-                className="w-full h-full rounded-2xl"
-              >
-                <TileLayer
-                  attribution="&copy; OpenStreetMap"
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
+                  <ResetCenterView coords={[proyectoLat, proyectoLng]} />
 
-                <Marker
-                  position={[proyectoLat, proyectoLng]}
-                  icon={redMarkerIcon}
-                />
-              </MapContainer>
+                  {ruta.length > 0 && (
+                    <Polyline
+                      positions={ruta}
+                      color="red"
+                      weight={6}
+                      opacity={0.8}
+                    />
+                  )}
+                </MapContainer>
 
-              {/* 🔻 BOTÓN UBICACIÓN EXACTA (ABAJO IZQUIERDA)  */}
-              <div className="absolute bottom-4 left-4 flex items-center gap-2 bg-[#2c976a] text-white font-bold text-xs sm:text-sm px-3 py-2 rounded-full shadow-lg">
-                <MapPin className="w-4 h-4" />
-                Ubicación exacta
+                {/* 🔻 BOTONES MAPA */}
+                <div className="absolute bottom-4 right-4 flex flex-col gap-2">
+
+                  {/* CÓMO LLEGAR */}
+                  <button
+                    onClick={handleComoLlegar}
+                    className="inline-flex items-center gap-2 bg-[#cb4a2a] hover:bg-[#b63f22] transition text-white font-semibold text-xs sm:text-sm px-4 py-2 rounded-full shadow-lg font-[Poppins]"
+                  >
+                    <Navigation className="w-4 h-4" />
+                    Cómo llegar
+                  </button>
+
+                  {/* LIMPIAR RUTA */}
+                  {ruta.length > 0 && (
+                    <button
+                      onClick={handleLimpiarRuta}
+                      className="inline-flex items-center gap-2 bg-gray-700 hover:bg-gray-900 transition text-white font-semibold text-xs sm:text-sm px-4 py-2 rounded-full shadow-lg font-[Poppins]"
+                    >
+                      <X className="w-4 h-4" />
+                      Limpiar ruta
+                    </button>
+                  )}
+                </div>
+
               </div>
-
-              {/* 🔻 BOTÓN CÓMO LLEGAR (ABAJO DERECHA - FLOTANTE) */}
-              <button
-                onClick={handleComoLlegar}
-                className="absolute bottom-4 right-4 inline-flex items-center gap-2 bg-[#cb4a2a] hover:bg-[#b63f22] transition text-white font-bold text-xs sm:text-sm px-4 py-2 rounded-full shadow-lg"
-              >
-                <Navigation className="w-4 h-4" />
-                Cómo llegar
-              </button>
-            </div>
-
-          </motion.div>
-
+            </motion.div>
           </motion.div>
 
           {/* VIDEO DERECHA */}
           <motion.div className="relative z-0" variants={fadeInRight}>
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-              
               <video
                 ref={videoRef}
                 src="/Home/UbicacionChancay.mp4"
                 controls={isPlaying}
-                
-                /* 🔥 EVITA PANTALLA COMPLETA EN CELULAR */
                 playsInline
                 webkit-playsinline="true"
                 x5-playsinline="true"
-
                 className="w-full h-[500px] sm:h-[620px] md:h-[750px] lg:h-[900px] xl:h-[1050px] object-cover rounded-3xl"
                 poster="/Home/poster-ubicacion.jpg"
                 onEnded={handleEnded}

@@ -77,15 +77,54 @@ const ChancayPlano = () => {
       transition={{ duration: 0.6 }}
       className="w-full min-h-screen bg-white text-gray-900 py-16 px-6"
     >
-      {/* ---------------------- HEADER ---------------------- */}
-      <div className="text-center mb-10">
-        <h2 className="text-5xl md:text-6xl font-extrabold tracking-tight text-[#cb4a2a] mb-3">
-          Proyecto Chancay
-        </h2>
-        <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-          Vive en una zona de alto crecimiento y cerca de los principales atractivos del norte chico.
-        </p>
+
+    
+
+
+            {/* ---------------------- HEADER SUPER LLAMATIVO ---------------------- */}
+      <div className="text-center mb-20">
+
+        {/* TÍTULO CON EFECTO MÁQUINA DE ESCRIBIR PROFESIONAL */}
+        <motion.h2
+          className="text-5xl md:text-7xl font-extrabold tracking-tight 
+          bg-gradient-to-r from-[#cb4a2a] via-[#ff8b4a] to-[#cb4a2a]
+          bg-clip-text text-transparent mb-6 drop-shadow-xl"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.span
+            className="inline-block font-extrabold"
+            style={{
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              display: "inline-block",
+              borderRight: "4px solid #cb4a2a",
+            }}
+            initial={{ width: 0 }}
+            animate={{ width: "100%" }}
+            transition={{
+              duration: 3,
+              ease: "linear",
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
+          >
+            Proyecto Chancay
+          </motion.span>
+        </motion.h2>
+
+      <motion.p
+          className="text-xl md:text-2xl text-gray-700 font-light max-w-3xl mx-auto mt-6 leading-relaxed"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          Vive en la zona con el crecimiento más acelerado del norte chico.
+          Conecta con nuevas oportunidades e inversión estratégica.
+        </motion.p>
       </div>
+
 
       {/* ---------------------- 3 IMÁGENES ---------------------- */}
       <div className="container mx-auto px-6 mb-16">
@@ -256,3 +295,5 @@ const ChancayPlano = () => {
 };
 
 export default ChancayPlano;
+
+

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 
@@ -20,9 +20,50 @@ export default function AFPSection() {
 
   const handleEnded = () => setIsPlaying(false);
 
+  // ---------------------------------------
+  // EFECTO MÁQUINA DE ESCRIBIR
+  // ---------------------------------------
+  const textos = [
+    "Convierte tus ahorros en el terreno de tus sueños",
+    "Ahorra con visión, invierte con inteligencia",
+    "Haz que tu dinero trabaje por ti"
+  ];
+
+  const [textoActual, setTextoActual] = useState("");
+  const [indexTexto, setIndexTexto] = useState(0);
+  const [borrando, setBorrando] = useState(false);
+  const [charIndex, setCharIndex] = useState(0);
+
+  useEffect(() => {
+    const intervalo = setInterval(() => {
+      const frase = textos[indexTexto];
+
+      if (!borrando) {
+        // escribiendo
+        if (charIndex < frase.length) {
+          setTextoActual(frase.substring(0, charIndex + 1));
+          setCharIndex(charIndex + 1);
+        } else {
+          setTimeout(() => setBorrando(true), 1200);
+        }
+      } else {
+        // borrando
+        if (charIndex > 0) {
+          setTextoActual(frase.substring(0, charIndex - 1));
+          setCharIndex(charIndex - 1);
+        } else {
+          setBorrando(false);
+          setIndexTexto((indexTexto + 1) % textos.length);
+        }
+      }
+    }, borrando ? 40 : 70);
+
+    return () => clearInterval(intervalo);
+  }, [charIndex, borrando, indexTexto]);
+
   return (
     <section className="relative w-full py-16 px-4 sm:px-8 lg:px-16 overflow-hidden rounded-3xl mt-20 bg-white">
-      <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-16 items-center max-w-7xl mx-auto">
+      <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-20 items-center max-w-7xl mx-auto">
 
         {/* ---------------- TEXTO + VIDEO ---------------- */}
         <motion.div
@@ -32,8 +73,13 @@ export default function AFPSection() {
           viewport={{ once: true }}
           className="space-y-8 text-center flex flex-col items-center"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight">
-            <span className="text-[#2c976a]">Convierte tus ahorros en el terreno de tus sueños</span>
+          {/* TITULO CON EFECTO MÁQUINA DE ESCRIBIR */}
+          <h2
+            className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight"
+            style={{ fontFamily: "Playfair Display, serif", color: "#2c976a" }}
+          >
+            {textoActual}
+            <span className="border-r-4 border-[#2c976a] ml-2 animate-pulse"></span>
           </h2>
 
           <p className="text-base sm:text-lg lg:text-xl text-gray-700 leading-relaxed font-medium max-w-xl">
@@ -64,7 +110,7 @@ export default function AFPSection() {
               src="/Home/afp-video.mp4"
               onEnded={handleEnded}
 
-              // 🔥🔥 EVITAR PANTALLA COMPLETA EN CELULAR 🔥🔥
+              // 🔥 EVITAR PANTALLA COMPLETA EN CELULAR
               playsInline
               webkit-playsinline="true"
               x5-playsinline="true"
@@ -76,66 +122,60 @@ export default function AFPSection() {
           <div className="w-20 h-1 bg-[#2c976a] rounded-full"></div>
         </motion.div>
 
-        {/* -------- GALERÍA DERECHA RESPONSIVA -------- */}
-        <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="relative w-full flex flex-col gap-6"
-        >
-          {/* Estilos base */}
+        {/* -------- GALERÍA DERECHA -------- */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="w-full flex flex-col lg:mt-32"
+          >
+
           <style>{`
             .img-esc {
               width: 100%;
-              height: 180px;
+              height: 200px;
               object-fit: cover;
               border-radius: 16px;
+              transition: all 0.35s ease;
             }
-
-            @media (min-width: 640px) {
-              .img-esc { height: 200px; }
+            .img-esc:hover {
+              transform: scale(1.04);
+              box-shadow: 0px 14px 30px rgba(0,0,0,0.25);
             }
 
             @media (min-width: 1024px) {
-              .img-esc { height: 210px; }
+              .img-esc { height: 230px; }
             }
           `}</style>
 
-          {/* VERSION MÓVIL = COLUMNA */}
-          <div className="flex flex-col gap-6 lg:hidden">
+          {/* MÓVIL: COLUMNA */}
+          <div className="flex flex-col gap-8 lg:hidden">
             {lotesImages.map((img, i) => (
-              <img key={i} src={img} className="img-esc shadow-xl" />
+              <motion.img
+                key={i}
+                src={img}
+                className="img-esc shadow-xl"
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.45 }}
+              />
             ))}
           </div>
 
-          {/* VERSION DESKTOP = ESCALERA */}
-          <div className="hidden lg:flex flex-col gap-8">
-            {/* Fila 1 */}
-            <div className="flex justify-between gap-6">
-              <img
-                src={lotesImages[0]}
-                className="img-esc translate-y-10 shadow-xl"
+          {/* DESKTOP: CUADRÍCULA ORDENADA */}
+          <div className="hidden lg:grid grid-cols-2 gap-10">
+            {lotesImages.map((img, i) => (
+              <motion.img
+                key={i}
+                src={img}
+                className="img-esc shadow-xl"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.45, delay: i * 0.1 }}
               />
-              <img
-                src={lotesImages[1]}
-                className="img-esc -translate-y-10 shadow-xl"
-              />
-            </div>
-
-            {/* Fila 2 */}
-            <div className="flex justify-between gap-6">
-              <img
-                src={lotesImages[2]}
-                className="img-esc translate-y-10 shadow-xl"
-              />
-              <img
-                src={lotesImages[3]}
-                className="img-esc -translate-y-10 shadow-xl"
-              />
-            </div>
+            ))}
           </div>
-
         </motion.div>
 
       </div>
