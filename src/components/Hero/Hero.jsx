@@ -293,7 +293,7 @@ const Hero = () => {
       // Crear un formulario dinámico para evitar problemas de CORS
       const form = document.createElement('form');
       form.method = 'POST';
-      form.action = 'https://formsubmit.co/eescobarc@autonoma.edu.pe';
+      form.action = 'https://formsubmit.co/escobarcamposedin@mail.com';
       form.style.display = 'none';
       
       // Función para agregar campos al formulario
