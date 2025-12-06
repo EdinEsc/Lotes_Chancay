@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
+import { useForm } from '@formspree/react';
 
 const TermsModal = ({ isOpen, onClose, type }) => {
   if (!isOpen) return null;
@@ -153,10 +154,12 @@ const TermsModal = ({ isOpen, onClose, type }) => {
 };
 
 const Formulario = () => {
-  const [cargando, setCargando] = useState(false);
-  const [mensaje, setMensaje] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState("terms");
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  
+  // Estado de Formspree - REEMPLAZA CON TU ID REAL
+  const [state, handleSubmit] = useForm("xyzrpqjg"); // <-- Cambia este ID
 
   const [formData, setFormData] = useState({
     nombre: "",
@@ -169,11 +172,6 @@ const Formulario = () => {
     terminos: false,
     publicidad: false,
   });
-
-  // 🔹 Función para verificar si estamos en desarrollo local
-  const esDesarrollo = () => {
-    return window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  };
 
   // 🔹 Abrir modal
   const openModal = (type) => {
@@ -205,102 +203,52 @@ const Formulario = () => {
     });
   };
 
-  // 🔹 Enviar datos - FUNCIONA EN DESARROLLO Y PRODUCCIÓN
-  const handleSubmit = async (e) => {
+  // 🔹 Manejar envío del formulario con Formspree
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setCargando(true);
-    setMensaje("⏳ Enviando datos...");
-
+    
     // Validar términos
     if (!formData.terminos) {
-      setMensaje("⚠️ Debes aceptar los Términos y Condiciones.");
-      setCargando(false);
+      alert("⚠️ Debes aceptar los Términos y Condiciones.");
       return;
     }
 
     // Validar campos requeridos
     const camposRequeridos = ['nombre', 'apellido', 'correo', 'documento', 'numeroDocumento', 'telefono', 'distrito'];
-    const camposFaltantes = camposRequeridos.filter(campo => !formData[campo].trim());
+    const camposFaltantes = camposRequeridos.filter(campo => !formData[campo].toString().trim());
     
     if (camposFaltantes.length > 0) {
-      setMensaje(`⚠️ Completa todos los campos requeridos.`);
-      setCargando(false);
+      alert(`⚠️ Completa todos los campos requeridos.`);
       return;
     }
 
-    // 🔹 MODO DESARROLLO (localhost)
-    if (esDesarrollo()) {
-      console.log("📝 MODO DESARROLLO - Datos del formulario:", formData);
-      console.log("📝 Estos datos se enviarían a: eescobarc@autonoma.edu.pe");
-      
-      // Simular envío exitoso
-      setTimeout(() => {
-        setMensaje("✅ ¡Formulario enviado correctamente! (Modo desarrollo)");
-        limpiarFormulario();
-        setCargando(false);
-        
-        // Mostrar éxito por 5 segundos
-        setTimeout(() => {
-          setMensaje("");
-        }, 5000);
-      }, 1500);
-      return;
-    }
+    // Crear objeto de datos para Formspree
+    const formDataToSend = new FormData();
+    formDataToSend.append('nombre', formData.nombre);
+    formDataToSend.append('apellido', formData.apellido);
+    formDataToSend.append('correo', formData.correo);
+    formDataToSend.append('documento', formData.documento);
+    formDataToSend.append('numeroDocumento', formData.numeroDocumento);
+    formDataToSend.append('telefono', formData.telefono);
+    formDataToSend.append('distrito', formData.distrito);
+    formDataToSend.append('terminos', formData.terminos ? 'Aceptado' : 'No aceptado');
+    formDataToSend.append('publicidad', formData.publicidad ? 'Aceptado' : 'No aceptado');
+    formDataToSend.append('_subject', 'Nuevo contacto desde Formulario - Información de Terrenos');
 
-    // 🔹 MODO PRODUCCIÓN - Usar FormSubmit
-    try {
-      // Crear un formulario dinámico para evitar problemas de CORS
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = 'https://formsubmit.co/escobarcamposedin@mail.com';
-      form.style.display = 'none';
+    // Enviar usando Formspree
+    await handleSubmit(formDataToSend);
+    
+    // Si el envío fue exitoso
+    if (state.succeeded) {
+      // Mostrar mensaje de éxito
+      setShowSuccessMessage(true);
       
-      // Función para agregar campos al formulario
-      const agregarCampo = (nombre, valor) => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = nombre;
-        input.value = valor;
-        form.appendChild(input);
-      };
-
-      // Agregar datos del usuario
-      agregarCampo('nombre', formData.nombre.trim());
-      agregarCampo('apellido', formData.apellido.trim());
-      agregarCampo('correo', formData.correo.trim());
-      agregarCampo('documento', formData.documento);
-      agregarCampo('numeroDocumento', formData.numeroDocumento.trim());
-      agregarCampo('telefono', formData.telefono.trim());
-      agregarCampo('distrito', formData.distrito);
-      agregarCampo('terminos', formData.terminos ? 'Aceptado' : 'No aceptado');
-      agregarCampo('publicidad', formData.publicidad ? 'Aceptado' : 'No aceptado');
+      // Limpiar formulario
+      limpiarFormulario();
       
-      // Configuración de FormSubmit
-      agregarCampo('_subject', 'Nuevo contacto desde Formulario - Información de Terrenos');
-      agregarCampo('_captcha', 'false');
-      agregarCampo('_template', 'table');
-      agregarCampo('_autoresponse', '¡Gracias por tu interés! Te contactaremos pronto con información sobre nuestros terrenos.');
-      agregarCampo('_next', `${window.location.origin}/gracias`);
-      agregarCampo('_cc', 'eescobarc@autonoma.edu.pe');
-      
-      // Agregar el formulario al documento y enviarlo
-      document.body.appendChild(form);
-      form.submit();
-      
-      // Limpiar el formulario después de enviar
+      // Ocultar mensaje después de 5 segundos
       setTimeout(() => {
-        limpiarFormulario();
-        setCargando(false);
-      }, 1000);
-      
-    } catch (error) {
-      console.error("❌ Error al enviar el formulario:", error);
-      setMensaje("❌ Error al enviar. Por favor, intenta nuevamente.");
-      setCargando(false);
-      
-      // Limpiar mensaje después de 5 segundos
-      setTimeout(() => {
-        setMensaje("");
+        setShowSuccessMessage(false);
       }, 5000);
     }
   };
@@ -321,8 +269,32 @@ const Formulario = () => {
           llenando el formulario de contacto, responderemos a la brevedad.
         </p>
 
+        {/* Mensaje de éxito */}
+        <AnimatePresence>
+          {showSuccessMessage && (
+            <motion.div
+              className="max-w-4xl mx-auto mb-6 p-4 bg-green-50 border border-green-200 rounded-lg"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                  <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </div>
+                <div>
+                  <p className="font-medium text-green-800">¡Mensaje enviado correctamente!</p>
+                  <p className="text-sm text-green-600">Te responderemos en breve.</p>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* 🔹 Formulario */}
-        <form className="max-w-4xl mx-auto space-y-6 text-left" onSubmit={handleSubmit}>
+        <form className="max-w-4xl mx-auto space-y-6 text-left" onSubmit={handleFormSubmit}>
           {/* Nombre y Apellido */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <input
@@ -463,35 +435,23 @@ const Formulario = () => {
             </label>
           </div>
 
-          {/* 🔹 Mensaje visual */}
-          {mensaje && (
-            <p className={`text-center text-sm font-medium mt-2 ${
-              mensaje.includes("✅") ? "text-green-700" : 
-              mensaje.includes("⚠️") ? "text-yellow-700" : 
-              mensaje.includes("❌") ? "text-red-700" : 
-              "text-blue-700"
-            }`}>
-              {mensaje}
+          {/* 🔹 Mensaje de error */}
+          {state.errors && (
+            <p className="text-red-600 text-center text-sm font-medium">
+              Hubo un error al enviar el formulario. Por favor, intenta nuevamente.
             </p>
-          )}
-
-          {/* Nota de desarrollo */}
-          {esDesarrollo() && (
-            <div className="text-xs text-gray-500 text-center mt-2">
-              ⚡ Modo desarrollo activado - Los datos se muestran en consola
-            </div>
           )}
 
           {/* Botón */}
           <div className="flex justify-center pt-4">
             <button
               type="submit"
-              disabled={cargando}
+              disabled={state.submitting}
               className={`bg-[#cb4a2a] hover:bg-[#b43e21] text-white px-10 py-3 font-semibold tracking-wide relative ${
-                cargando ? "opacity-50 cursor-not-allowed" : ""
+                state.submitting ? "opacity-50 cursor-not-allowed" : ""
               }`}
             >
-              {cargando ? (
+              {state.submitting ? (
                 <div className="flex items-center justify-center gap-2">
                   <span className="w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin"></span>
                   ENVIANDO...

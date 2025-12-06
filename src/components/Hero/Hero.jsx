@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, X } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useForm } from '@formspree/react';
 
 const TermsModal = ({ isOpen, onClose, type }) => {
   if (!isOpen) return null;
@@ -65,7 +66,6 @@ const TermsModal = ({ isOpen, onClose, type }) => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        {/* Fondo oscuro */}
         <motion.div
           className="absolute inset-0 bg-black/70 backdrop-blur-sm"
           onClick={onClose}
@@ -74,7 +74,6 @@ const TermsModal = ({ isOpen, onClose, type }) => {
           exit={{ opacity: 0 }}
         />
 
-        {/* Modal */}
         <motion.div
           className="relative bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden"
           initial={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -82,7 +81,6 @@ const TermsModal = ({ isOpen, onClose, type }) => {
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
           transition={{ type: "spring", damping: 25 }}
         >
-          {/* Header */}
           <div className="sticky top-0 z-10 bg-gradient-to-r from-[#2c976a] to-[#32d28a] p-6 text-white">
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-bold">{title}</h2>
@@ -100,7 +98,6 @@ const TermsModal = ({ isOpen, onClose, type }) => {
             </p>
           </div>
 
-          {/* Contenido */}
           <div className="p-6 md:p-8 overflow-y-auto max-h-[calc(90vh-120px)]">
             <div className="space-y-6">
               {items.map((item) => (
@@ -130,7 +127,6 @@ const TermsModal = ({ isOpen, onClose, type }) => {
               ))}
             </div>
 
-            {/* Footer del modal */}
             <div className="mt-8 pt-6 border-t border-gray-200">
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <p className="text-gray-600 text-sm text-center sm:text-left">
@@ -155,10 +151,13 @@ const TermsModal = ({ isOpen, onClose, type }) => {
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [cargando, setCargando] = useState(false);
-  const [mensaje, setMensaje] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState("terms");
+  const [formKey, setFormKey] = useState(Date.now());
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  
+  // Estado de Formspree
+  const [state, handleSubmit] = useForm("xyzrpqjg"); // Reemplaza con tu ID de Formspree
   
   const [formData, setFormData] = useState({
     nombre: "",
@@ -230,6 +229,7 @@ const Hero = () => {
       terminos: false,
       publicidad: false,
     });
+    setFormKey(Date.now());
   };
 
   // 🔹 Manejar cambios en los inputs
@@ -241,107 +241,52 @@ const Hero = () => {
     });
   };
 
-  // 🔹 Función para verificar si estamos en desarrollo local
-  const esDesarrollo = () => {
-    return window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  };
-
-  // 🔹 Enviar datos - FUNCIONA EN DESARROLLO Y PRODUCCIÓN
-  const handleSubmit = async (e) => {
+  // 🔹 Manejar envío del formulario con Formspree
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setCargando(true);
-    setMensaje("⏳ Enviando datos...");
-
+    
     // Validar términos
     if (!formData.terminos) {
-      setMensaje("⚠️ Debes aceptar los Términos y Condiciones.");
-      setCargando(false);
+      alert("⚠️ Debes aceptar los Términos y Condiciones.");
       return;
     }
 
     // Validar campos requeridos
     const camposRequeridos = ['nombre', 'apellido', 'correo', 'documento', 'numeroDocumento', 'telefono', 'distrito'];
-    const camposFaltantes = camposRequeridos.filter(campo => !formData[campo].trim());
+    const camposFaltantes = camposRequeridos.filter(campo => !formData[campo].toString().trim());
     
     if (camposFaltantes.length > 0) {
-      setMensaje(`⚠️ Completa todos los campos requeridos.`);
-      setCargando(false);
+      alert(`⚠️ Completa todos los campos requeridos.`);
       return;
     }
 
-    // 🔹 MODO DESARROLLO (localhost)
-    if (esDesarrollo()) {
-      console.log("📝 MODO DESARROLLO - Datos del formulario:", formData);
-      console.log("📝 Estos datos se enviarían a: eescobarc@autonoma.edu.pe");
-      
-      // Simular envío exitoso
-      setTimeout(() => {
-        setMensaje("✅ ¡Formulario enviado correctamente! (Modo desarrollo)");
-        limpiarFormulario();
-        setCargando(false);
-        
-        // Mostrar éxito por 5 segundos
-        setTimeout(() => {
-          setMensaje("");
-        }, 5000);
-      }, 1500);
-      return;
-    }
+    // Crear objeto de datos para Formspree
+    const formDataToSend = new FormData();
+    formDataToSend.append('nombre', formData.nombre);
+    formDataToSend.append('apellido', formData.apellido);
+    formDataToSend.append('correo', formData.correo);
+    formDataToSend.append('documento', formData.documento);
+    formDataToSend.append('numeroDocumento', formData.numeroDocumento);
+    formDataToSend.append('telefono', formData.telefono);
+    formDataToSend.append('distrito', formData.distrito);
+    formDataToSend.append('terminos', formData.terminos ? 'Aceptado' : 'No aceptado');
+    formDataToSend.append('publicidad', formData.publicidad ? 'Aceptado' : 'No aceptado');
+    formDataToSend.append('_subject', 'Nuevo contacto - Información de Terrenos');
 
-    // 🔹 MODO PRODUCCIÓN - Usar FormSubmit
-    try {
-      // Crear un formulario dinámico para evitar problemas de CORS
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = 'https://formsubmit.co/escobarcamposedin@mail.com';
-      form.style.display = 'none';
+    // Enviar usando Formspree
+    await handleSubmit(formDataToSend);
+    
+    // Si el envío fue exitoso
+    if (state.succeeded) {
+      // Mostrar mensaje de éxito
+      setShowSuccessMessage(true);
       
-      // Función para agregar campos al formulario
-      const agregarCampo = (nombre, valor) => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = nombre;
-        input.value = valor;
-        form.appendChild(input);
-      };
-
-      // Agregar datos del usuario
-      agregarCampo('nombre', formData.nombre.trim());
-      agregarCampo('apellido', formData.apellido.trim());
-      agregarCampo('correo', formData.correo.trim());
-      agregarCampo('documento', formData.documento);
-      agregarCampo('numeroDocumento', formData.numeroDocumento.trim());
-      agregarCampo('telefono', formData.telefono.trim());
-      agregarCampo('distrito', formData.distrito);
-      agregarCampo('terminos', formData.terminos ? 'Aceptado' : 'No aceptado');
-      agregarCampo('publicidad', formData.publicidad ? 'Aceptado' : 'No aceptado');
+      // Limpiar formulario
+      limpiarFormulario();
       
-      // Configuración de FormSubmit
-      agregarCampo('_subject', 'Nuevo contacto - Información de Terrenos');
-      agregarCampo('_captcha', 'false');
-      agregarCampo('_template', 'table');
-      agregarCampo('_autoresponse', '¡Gracias por tu interés! Te contactaremos pronto con información sobre nuestros terrenos.');
-      agregarCampo('_next', `${window.location.origin}/gracias`);
-      agregarCampo('_cc', 'eescobarc@autonoma.edu.pe'); // Copia adicional
-      
-      // Agregar el formulario al documento y enviarlo
-      document.body.appendChild(form);
-      form.submit();
-      
-      // Limpiar el formulario después de enviar
+      // Ocultar mensaje después de 5 segundos
       setTimeout(() => {
-        limpiarFormulario();
-        setCargando(false);
-      }, 1000);
-      
-    } catch (error) {
-      console.error("❌ Error al enviar el formulario:", error);
-      setMensaje("❌ Error al enviar. Por favor, intenta nuevamente.");
-      setCargando(false);
-      
-      // Limpiar mensaje después de 5 segundos
-      setTimeout(() => {
-        setMensaje("");
+        setShowSuccessMessage(false);
       }, 5000);
     }
   };
@@ -362,7 +307,6 @@ const Hero = () => {
               transition={{ duration: 10, ease: "linear" }}
             >
               <img src={image} alt={`Slide ${index}`} className="w-full h-full object-cover" />
-              {/* Gradiente para mejorar contraste del texto */}
               <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
             </motion.div>
           ))}
@@ -441,7 +385,35 @@ const Hero = () => {
                   QUIERO RECIBIR INFORMACIÓN
                 </motion.h3>
 
-                <form onSubmit={handleSubmit}>
+                {/* Mensaje de éxito */}
+                <AnimatePresence>
+                  {showSuccessMessage && (
+                    <motion.div
+                      className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg"
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                          <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                        </div>
+                        <div>
+                          <p className="font-medium text-green-800">¡Datos enviados correctamente!</p>
+                          <p className="text-sm text-green-600">Te contactaremos pronto.</p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* 🔹 FORMULARIO FORMSPREE */}
+                <form 
+                  key={formKey}
+                  onSubmit={handleFormSubmit}
+                >
                   <div className="space-y-6">
                     <motion.div 
                       className="grid grid-cols-1 sm:grid-cols-2 gap-4"
@@ -598,35 +570,19 @@ const Hero = () => {
                       </motion.label>
                     </motion.div>
 
-                    {/* 🔹 Mensaje visual */}
-                    {mensaje && (
-                      <motion.p 
-                        className={`text-center text-sm font-medium mt-2 ${
-                          mensaje.includes("✅") ? "text-green-700" : 
-                          mensaje.includes("⚠️") ? "text-yellow-700" : 
-                          mensaje.includes("❌") ? "text-red-700" : 
-                          "text-blue-700"
-                        }`}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                      >
-                        {mensaje}
-                      </motion.p>
-                    )}
-
                     {/* 🔹 Botón con loader */}
                     <motion.button
                       type="submit"
-                      disabled={cargando}
+                      disabled={state.submitting}
                       className={`w-full font-semibold py-3 rounded-lg transition ${
-                        cargando
+                        state.submitting
                           ? "bg-gray-400 cursor-not-allowed"
                           : "bg-[#2c976a] hover:bg-[#247b57] text-white"
                       }`}
-                      whileHover={!cargando ? { scale: 1.05 } : {}}
-                      whileTap={!cargando ? { scale: 0.95 } : {}}
+                      whileHover={!state.submitting ? { scale: 1.05 } : {}}
+                      whileTap={!state.submitting ? { scale: 0.95 } : {}}
                     >
-                      {cargando ? (
+                      {state.submitting ? (
                         <div className="flex items-center justify-center gap-2">
                           <span className="w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></span>
                           Enviando...
@@ -636,12 +592,10 @@ const Hero = () => {
                       )}
                     </motion.button>
 
-                    {/* 🔹 Nota de desarrollo */}
-                    {esDesarrollo() && (
-                      <div className="text-xs text-gray-500 text-center mt-2">
-                        ⚡ Modo desarrollo activado - Los datos se muestran en consola
-                      </div>
-                    )}
+                    {/* 🔹 Nota importante */}
+                    <div className="text-xs text-gray-500 text-center mt-2">
+                      ✅ Te contactaremos en las próximas 24 horas.
+                    </div>
                   </div>
                 </form>
               </motion.div>
