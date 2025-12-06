@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, X } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useForm } from '@formspree/react';
 
 const TermsModal = ({ isOpen, onClose, type }) => {
   if (!isOpen) return null;
@@ -155,9 +154,7 @@ const Hero = () => {
   const [modalType, setModalType] = useState("terms");
   const [formKey, setFormKey] = useState(Date.now());
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  
-  // Estado de Formspree
-  const [state, handleSubmit] = useForm("xyzrpqjg"); // Reemplaza con tu ID de Formspree
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   const [formData, setFormData] = useState({
     nombre: "",
@@ -241,7 +238,7 @@ const Hero = () => {
     });
   };
 
-  // 🔹 Manejar envío del formulario con Formspree
+  // 🔹 Manejar envío del formulario CORREGIDO
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     
@@ -260,34 +257,52 @@ const Hero = () => {
       return;
     }
 
-    // Crear objeto de datos para Formspree
-    const formDataToSend = new FormData();
-    formDataToSend.append('nombre', formData.nombre);
-    formDataToSend.append('apellido', formData.apellido);
-    formDataToSend.append('correo', formData.correo);
-    formDataToSend.append('documento', formData.documento);
-    formDataToSend.append('numeroDocumento', formData.numeroDocumento);
-    formDataToSend.append('telefono', formData.telefono);
-    formDataToSend.append('distrito', formData.distrito);
-    formDataToSend.append('terminos', formData.terminos ? 'Aceptado' : 'No aceptado');
-    formDataToSend.append('publicidad', formData.publicidad ? 'Aceptado' : 'No aceptado');
-    formDataToSend.append('_subject', 'Nuevo contacto - Información de Terrenos');
+    // Activar estado de envío
+    setIsSubmitting(true);
 
-    // Enviar usando Formspree
-    await handleSubmit(formDataToSend);
-    
-    // Si el envío fue exitoso
-    if (state.succeeded) {
-      // Mostrar mensaje de éxito
-      setShowSuccessMessage(true);
+    try {
+      // Enviar formulario usando Formspree
+      const formDataToSend = new FormData();
+      formDataToSend.append('nombre', formData.nombre);
+      formDataToSend.append('apellido', formData.apellido);
+      formDataToSend.append('correo', formData.correo);
+      formDataToSend.append('documento', formData.documento);
+      formDataToSend.append('numeroDocumento', formData.numeroDocumento);
+      formDataToSend.append('telefono', formData.telefono);
+      formDataToSend.append('distrito', formData.distrito);
+      formDataToSend.append('terminos', formData.terminos ? 'Aceptado' : 'No aceptado');
+      formDataToSend.append('publicidad', formData.publicidad ? 'Aceptado' : 'No aceptado');
+      formDataToSend.append('_subject', 'Nuevo contacto - Información de Terrenos');
       
-      // Limpiar formulario
-      limpiarFormulario();
-      
-      // Ocultar mensaje después de 5 segundos
-      setTimeout(() => {
-        setShowSuccessMessage(false);
-      }, 5000);
+      // Cambia 'xyzrpqjg' por tu ID real de Formspree
+      const response = await fetch("https://formspree.io/f/xyzrpqjg", {
+        method: "POST",
+        body: formDataToSend,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        // Mostrar mensaje de éxito INMEDIATAMENTE
+        setShowSuccessMessage(true);
+        
+        // Limpiar formulario
+        limpiarFormulario();
+        
+        // Ocultar mensaje después de 5 segundos
+        setTimeout(() => {
+          setShowSuccessMessage(false);
+        }, 5000);
+      } else {
+        throw new Error('Error en el envío');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert("❌ Hubo un error al enviar el formulario. Por favor, intenta de nuevo.");
+    } finally {
+      // Desactivar estado de envío
+      setIsSubmitting(false);
     }
   };
 
@@ -402,7 +417,7 @@ const Hero = () => {
                         </div>
                         <div>
                           <p className="font-medium text-green-800">¡Datos enviados correctamente!</p>
-                          <p className="text-sm text-green-600">Te contactaremos pronto.</p>
+                          <p className="text-sm text-green-600">Te contactaremos en las próximas 24 horas.</p>
                         </div>
                       </div>
                     </motion.div>
@@ -573,16 +588,16 @@ const Hero = () => {
                     {/* 🔹 Botón con loader */}
                     <motion.button
                       type="submit"
-                      disabled={state.submitting}
+                      disabled={isSubmitting}
                       className={`w-full font-semibold py-3 rounded-lg transition ${
-                        state.submitting
+                        isSubmitting
                           ? "bg-gray-400 cursor-not-allowed"
                           : "bg-[#2c976a] hover:bg-[#247b57] text-white"
                       }`}
-                      whileHover={!state.submitting ? { scale: 1.05 } : {}}
-                      whileTap={!state.submitting ? { scale: 0.95 } : {}}
+                      whileHover={!isSubmitting ? { scale: 1.05 } : {}}
+                      whileTap={!isSubmitting ? { scale: 0.95 } : {}}
                     >
-                      {state.submitting ? (
+                      {isSubmitting ? (
                         <div className="flex items-center justify-center gap-2">
                           <span className="w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></span>
                           Enviando...

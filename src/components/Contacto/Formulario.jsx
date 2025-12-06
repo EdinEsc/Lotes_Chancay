@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import { useForm } from '@formspree/react';
 
 const TermsModal = ({ isOpen, onClose, type }) => {
   if (!isOpen) return null;
@@ -157,10 +156,8 @@ const Formulario = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState("terms");
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
-  // Estado de Formspree - REEMPLAZA CON TU ID REAL
-  const [state, handleSubmit] = useForm("xyzrpqjg"); // <-- Cambia este ID
-
   const [formData, setFormData] = useState({
     nombre: "",
     apellido: "",
@@ -203,7 +200,7 @@ const Formulario = () => {
     });
   };
 
-  // 🔹 Manejar envío del formulario con Formspree
+  // 🔹 Manejar envío del formulario CORREGIDO
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     
@@ -222,34 +219,52 @@ const Formulario = () => {
       return;
     }
 
-    // Crear objeto de datos para Formspree
-    const formDataToSend = new FormData();
-    formDataToSend.append('nombre', formData.nombre);
-    formDataToSend.append('apellido', formData.apellido);
-    formDataToSend.append('correo', formData.correo);
-    formDataToSend.append('documento', formData.documento);
-    formDataToSend.append('numeroDocumento', formData.numeroDocumento);
-    formDataToSend.append('telefono', formData.telefono);
-    formDataToSend.append('distrito', formData.distrito);
-    formDataToSend.append('terminos', formData.terminos ? 'Aceptado' : 'No aceptado');
-    formDataToSend.append('publicidad', formData.publicidad ? 'Aceptado' : 'No aceptado');
-    formDataToSend.append('_subject', 'Nuevo contacto desde Formulario - Información de Terrenos');
+    // Activar estado de envío
+    setIsSubmitting(true);
 
-    // Enviar usando Formspree
-    await handleSubmit(formDataToSend);
-    
-    // Si el envío fue exitoso
-    if (state.succeeded) {
-      // Mostrar mensaje de éxito
-      setShowSuccessMessage(true);
+    try {
+      // Enviar formulario usando Formspree
+      const formDataToSend = new FormData();
+      formDataToSend.append('nombre', formData.nombre);
+      formDataToSend.append('apellido', formData.apellido);
+      formDataToSend.append('correo', formData.correo);
+      formDataToSend.append('documento', formData.documento);
+      formDataToSend.append('numeroDocumento', formData.numeroDocumento);
+      formDataToSend.append('telefono', formData.telefono);
+      formDataToSend.append('distrito', formData.distrito);
+      formDataToSend.append('terminos', formData.terminos ? 'Aceptado' : 'No aceptado');
+      formDataToSend.append('publicidad', formData.publicidad ? 'Aceptado' : 'No aceptado');
+      formDataToSend.append('_subject', 'Nuevo contacto desde Formulario - Información de Terrenos');
       
-      // Limpiar formulario
-      limpiarFormulario();
-      
-      // Ocultar mensaje después de 5 segundos
-      setTimeout(() => {
-        setShowSuccessMessage(false);
-      }, 5000);
+      // 🔹 CAMBIA ESTE ID POR TU ID REAL DE FORMSPREE
+      const response = await fetch("https://formspree.io/f/xyzrpqjg", {
+        method: "POST",
+        body: formDataToSend,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        // Mostrar mensaje de éxito INMEDIATAMENTE
+        setShowSuccessMessage(true);
+        
+        // Limpiar formulario
+        limpiarFormulario();
+        
+        // Ocultar mensaje después de 5 segundos
+        setTimeout(() => {
+          setShowSuccessMessage(false);
+        }, 5000);
+      } else {
+        throw new Error('Error en el envío');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert("❌ Hubo un error al enviar el formulario. Por favor, intenta de nuevo.");
+    } finally {
+      // Desactivar estado de envío
+      setIsSubmitting(false);
     }
   };
 
@@ -435,23 +450,16 @@ const Formulario = () => {
             </label>
           </div>
 
-          {/* 🔹 Mensaje de error */}
-          {state.errors && (
-            <p className="text-red-600 text-center text-sm font-medium">
-              Hubo un error al enviar el formulario. Por favor, intenta nuevamente.
-            </p>
-          )}
-
           {/* Botón */}
           <div className="flex justify-center pt-4">
             <button
               type="submit"
-              disabled={state.submitting}
+              disabled={isSubmitting}
               className={`bg-[#cb4a2a] hover:bg-[#b43e21] text-white px-10 py-3 font-semibold tracking-wide relative ${
-                state.submitting ? "opacity-50 cursor-not-allowed" : ""
+                isSubmitting ? "opacity-50 cursor-not-allowed" : ""
               }`}
             >
-              {state.submitting ? (
+              {isSubmitting ? (
                 <div className="flex items-center justify-center gap-2">
                   <span className="w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin"></span>
                   ENVIANDO...
