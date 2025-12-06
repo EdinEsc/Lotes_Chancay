@@ -117,7 +117,7 @@ const Ubicacion = () => {
 
             <p className="text-xl md:text-2xl text-gray-700 font-medium leading-relaxed">
               Vive cerca de la nueva 
-              <span className="text-[#2c976a] font-bold"> Ciudad Portuaria de Chancay</span>
+              <span className="text-[#2c976a] font-bold"> Ciudad Portuaria de Chancay </span>
               y los principales accesos del norte chico.
             </p>
 
