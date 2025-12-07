@@ -364,22 +364,37 @@ const Hero = () => {
                   Cuota inicial del 50%
                 </motion.div>
 
-              {/* Botones */}
-              <motion.div 
-                className="flex flex-col sm:flex-row gap-4 mb-8 lg:mb-0 justify-center" 
-                variants={fadeInUp}
-              >
-                <Link to="/contacto">
-                  <motion.button
-                    className="bg-[#32d28a] hover:bg-[#27a56f] text-white font-bold py-3 px-4 lg:px-6 rounded-xl text-base shadow-lg transition-all flex items-center justify-center gap-2"
-                    whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(50,210,138,0.5)" }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <ArrowRight className="w-5 h-5" />
-                    ¡Quiero mi Lote!
-                  </motion.button>
-                </Link>
-              </motion.div>
+{/* Botones */}
+<motion.div 
+  className="flex flex-col sm:flex-row gap-4 mb-8 lg:mb-0 justify-center" 
+  variants={fadeInUp}
+>
+  <Link to="/contacto">
+    <motion.button
+      className="bg-[#32d28a] hover:bg-[#27a56f] text-white font-bold py-3 px-4 lg:px-6 rounded-xl text-base shadow-lg transition-all flex items-center justify-center gap-2"
+      whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(50,210,138,0.5)" }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <ArrowRight className="w-5 h-5" />
+      ¡Quiero mi Lote!
+    </motion.button>
+  </Link>
+</motion.div>
+
+{/* Imagen de descuento debajo del botón */}
+<motion.div 
+  className="mt-6 flex justify-center"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.5, duration: 0.8 }}
+>
+  <img 
+    src="/Home/descuento.jpg" 
+    alt="Descuento especial" 
+    className="max-w-sm md:max-w-md lg:max-w-xl rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
+  />
+</motion.div>
+
 
               </motion.div>
 

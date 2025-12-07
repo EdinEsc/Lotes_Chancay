@@ -6,6 +6,7 @@ const ChancayPlano = () => {
   const [zoom, setZoom] = useState(1);
   const containerRef = useRef(null);
   const imageRef = useRef(null);
+  const [isDesktop, setIsDesktop] = useState(false); // Nuevo estado para detectar desktop
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -16,6 +17,23 @@ const ChancayPlano = () => {
     top: 0,
     bottom: 0,
   });
+
+  // Detectar tamaño de pantalla
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsDesktop(window.innerWidth >= 768); // 768px = md breakpoint de Tailwind
+    };
+
+    // Verificar al montar
+    checkScreenSize();
+
+    // Escuchar cambios de tamaño
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => {
+      window.removeEventListener("resize", checkScreenSize);
+    };
+  }, []);
 
   const updateConstraints = () => {
     const container = containerRef.current;
@@ -70,7 +88,7 @@ const ChancayPlano = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Efecto de máquina de escribir para el título
+  // Efecto de máquina de escribir SOLO para desktop
   const titleText = "Proyecto Chancay 101";
   const [displayedText, setDisplayedText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
@@ -78,6 +96,12 @@ const ChancayPlano = () => {
   const [typingSpeed, setTypingSpeed] = useState(150);
 
   useEffect(() => {
+    // Solo ejecutar el efecto de máquina de escribir si es desktop
+    if (!isDesktop) {
+      setDisplayedText(titleText); // En móvil, mostrar texto completo
+      return;
+    }
+
     const handleType = () => {
       const i = loopNum % 1; // Solo tenemos un texto
       const fullText = titleText;
@@ -109,7 +133,7 @@ const ChancayPlano = () => {
     }, typingSpeed);
 
     return () => clearTimeout(timer);
-  }, [displayedText, isDeleting, loopNum]);
+  }, [displayedText, isDeleting, loopNum, isDesktop]);
 
   return (
     <motion.section
@@ -121,7 +145,7 @@ const ChancayPlano = () => {
 
       {/* ---------------------- HEADER SUPER LLAMATIVO ---------------------- */}
       <div className="text-center mb-20">
-        {/* TÍTULO CON EFECTO MÁQUINA DE ESCRIBIR PROFESIONAL */}
+        {/* TÍTULO CON EFECTO MÁQUINA DE ESCRIBIR SOLO EN DESKTOP */}
         <div className="relative inline-block">
           <motion.h2
             className="text-5xl md:text-7xl font-extrabold tracking-tight 
@@ -131,14 +155,22 @@ const ChancayPlano = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
-            {displayedText}
-            {/* Cursor parpadeante */}
-            <span className="inline-block w-[3px] h-[1.1em] bg-gradient-to-b from-[#cb4a2a] to-[#ff8b4a] ml-1 animate-pulse"></span>
-            
-            {/* Texto completo invisible para mantener el tamaño */}
-            <span className="absolute top-0 left-0 opacity-0 pointer-events-none">
-              {titleText}
-            </span>
+            {/* En móvil: texto completo sin efecto */}
+            {isDesktop ? (
+              <>
+                {displayedText}
+                {/* Cursor parpadeante solo en desktop */}
+                <span className="inline-block w-[3px] h-[1.1em] bg-gradient-to-b from-[#cb4a2a] to-[#ff8b4a] ml-1 animate-pulse"></span>
+                
+                {/* Texto completo invisible para mantener el tamaño */}
+                <span className="absolute top-0 left-0 opacity-0 pointer-events-none">
+                  {titleText}
+                </span>
+              </>
+            ) : (
+              // En móvil: texto estático
+              titleText
+            )}
           </motion.h2>
         </div>
 
@@ -146,7 +178,7 @@ const ChancayPlano = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
+          transition={{ duration: 0.8, delay: isDesktop ? 0.5 : 0 }} // Sin delay en móvil
         >
           <p className="text-xl md:text-2xl text-gray-700 font-light max-w-3xl mx-auto mt-6 leading-relaxed">
             Vive en la zona con el crecimiento más acelerado del norte chico.

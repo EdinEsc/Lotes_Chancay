@@ -82,17 +82,7 @@ const HeroContacto = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.9 }}
           >
-            {/* <motion.button
-              className="bg-[#32d28a] hover:bg-[#27a56f] text-white font-black py-6 px-12 rounded-2xl text-2xl shadow-2xl transition-all flex items-center justify-center gap-4 min-w-[280px]"
-              whileHover={{ 
-                scale: 1.1, 
-                boxShadow: "0 20px 40px rgba(50, 210, 138, 0.4)" 
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <MessageCircle className="w-8 h-8" />
-              SOLICITAR INFORMACIÓN
-            </motion.button> */}
+        
 
             <a href="tel:983722524">
               <motion.button
