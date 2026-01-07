@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, useMotionValue } from "framer-motion";
-import { MapPin, Plus, Minus, RefreshCcw } from "lucide-react";
+import { MapPin } from "lucide-react";
+import api from "../../api/axios";
 
 const ChancayPlano = () => {
   const [zoom, setZoom] = useState(1);
   const containerRef = useRef(null);
   const imageRef = useRef(null);
-  const [isDesktop, setIsDesktop] = useState(false); // Nuevo estado para detectar desktop
+  const [planoUrl, setPlanoUrl] = useState(null);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -18,21 +19,17 @@ const ChancayPlano = () => {
     bottom: 0,
   });
 
-  // Detectar tamaño de pantalla
   useEffect(() => {
-    const checkScreenSize = () => {
-      setIsDesktop(window.innerWidth >= 768); // 768px = md breakpoint de Tailwind
+    const fetchPlano = async () => {
+      try {
+        const res = await api.get("/page-image/hero_image");
+        setPlanoUrl(res.data.url);
+      } catch (error) {
+        console.error("Error al cargar imagen del plano", error);
+      }
     };
 
-    // Verificar al montar
-    checkScreenSize();
-
-    // Escuchar cambios de tamaño
-    window.addEventListener("resize", checkScreenSize);
-
-    return () => {
-      window.removeEventListener("resize", checkScreenSize);
-    };
+    fetchPlano();
   }, []);
 
   const updateConstraints = () => {
@@ -88,53 +85,6 @@ const ChancayPlano = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Efecto de máquina de escribir SOLO para desktop
-  const titleText = "Proyecto Chancay 101";
-  const [displayedText, setDisplayedText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [loopNum, setLoopNum] = useState(0);
-  const [typingSpeed, setTypingSpeed] = useState(150);
-
-  useEffect(() => {
-    // Solo ejecutar el efecto de máquina de escribir si es desktop
-    if (!isDesktop) {
-      setDisplayedText(titleText); // En móvil, mostrar texto completo
-      return;
-    }
-
-    const handleType = () => {
-      const i = loopNum % 1; // Solo tenemos un texto
-      const fullText = titleText;
-
-      if (isDeleting) {
-        // Borrando
-        setDisplayedText(fullText.substring(0, displayedText.length - 1));
-        setTypingSpeed(100); // Más rápido al borrar
-      } else {
-        // Escribiendo
-        setDisplayedText(fullText.substring(0, displayedText.length + 1));
-        setTypingSpeed(150); // Normal al escribir
-      }
-
-      if (!isDeleting && displayedText === fullText) {
-        // Pausa al terminar de escribir
-        setTimeout(() => setIsDeleting(true), 2000);
-      } else if (isDeleting && displayedText === "") {
-        // Cambiar a escribir después de borrar
-        setIsDeleting(false);
-        setLoopNum(loopNum + 1);
-        // Pequeña pausa antes de empezar a escribir de nuevo
-        setTypingSpeed(500);
-      }
-    };
-
-    const timer = setTimeout(() => {
-      handleType();
-    }, typingSpeed);
-
-    return () => clearTimeout(timer);
-  }, [displayedText, isDeleting, loopNum, isDesktop]);
-
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -142,43 +92,25 @@ const ChancayPlano = () => {
       transition={{ duration: 0.6 }}
       className="w-full min-h-screen bg-white text-gray-900 py-16 px-6"
     >
-
-      {/* ---------------------- HEADER SUPER LLAMATIVO ---------------------- */}
+      {/* ---------------------- HEADER SIMPLE ---------------------- */}
       <div className="text-center mb-20">
-        {/* TÍTULO CON EFECTO MÁQUINA DE ESCRIBIR SOLO EN DESKTOP */}
-        <div className="relative inline-block">
-          <motion.h2
-            className="text-5xl md:text-7xl font-extrabold tracking-tight 
-            bg-gradient-to-r from-[#cb4a2a] via-[#ff8b4a] to-[#cb4a2a]
-            bg-clip-text text-transparent mb-6 drop-shadow-xl min-h-[1.2em]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-          >
-            {/* En móvil: texto completo sin efecto */}
-            {isDesktop ? (
-              <>
-                {displayedText}
-                {/* Cursor parpadeante solo en desktop */}
-                <span className="inline-block w-[3px] h-[1.1em] bg-gradient-to-b from-[#cb4a2a] to-[#ff8b4a] ml-1 animate-pulse"></span>
-                
-                {/* Texto completo invisible para mantener el tamaño */}
-                <span className="absolute top-0 left-0 opacity-0 pointer-events-none">
-                  {titleText}
-                </span>
-              </>
-            ) : (
-              // En móvil: texto estático
-              titleText
-            )}
-          </motion.h2>
-        </div>
+        {/* TÍTULO ESTÁTICO Y NORMAL */}
+        <motion.h2
+          className="text-5xl md:text-7xl font-extrabold tracking-tight 
+            bg-gradient-to-r from-[#2c976a] via-[#4ac48e] to-[#2c976a]
+            bg-clip-text text-transparent mb-6 drop-shadow-xl"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          Proyecto Chancay 101
+        </motion.h2>
 
-        {/* Subtítulo con animación escalonada */}
+        {/* Subtítulo */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: isDesktop ? 0.5 : 0 }} // Sin delay en móvil
+          transition={{ duration: 0.8, delay: 0.2 }}
         >
           <p className="text-xl md:text-2xl text-gray-700 font-light max-w-3xl mx-auto mt-6 leading-relaxed">
             Vive en la zona con el crecimiento más acelerado del norte chico.
@@ -194,6 +126,7 @@ const ChancayPlano = () => {
             <div className="relative overflow-hidden h-72 md:h-80">
               <img
                 src="/Home/puerto.jpg"
+                alt="Mega Puerto Chancay"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -212,6 +145,7 @@ const ChancayPlano = () => {
             <div className="relative overflow-hidden h-72 md:h-80">
               <img
                 src="/Home/castillo.jpg"
+                alt="Castillo de Chancay"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -230,6 +164,7 @@ const ChancayPlano = () => {
             <div className="relative overflow-hidden h-72 md:h-80">
               <img
                 src="/Home/ubi3.jpg"
+                alt="Lomas de Lachay"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -253,6 +188,7 @@ const ChancayPlano = () => {
             <motion.img
               key={index}
               src={img}
+              alt={`Carrusel ${index + 1}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: slide === index ? 1 : 0 }}
               transition={{ duration: 1 }}
@@ -264,7 +200,6 @@ const ChancayPlano = () => {
 
       {/* ---------------------- PLANO INTERACTIVO ---------------------- */}
       <div id="plano-lotes" className="relative max-w-7xl mx-auto">
-
         {/* ⭐ LEYENDA MUY PEQUEÑA EN CELULAR ⭐ */}
         <div
           className="
@@ -279,7 +214,6 @@ const ChancayPlano = () => {
             overflow-hidden
           "
         >
-          {/* Elemento decorativo */}
           <div className="absolute top-0 left-0 w-12 h-12 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-50 to-transparent rounded-full -translate-x-7 -translate-y-7"></div>
           
           <h3 className="text-[11px] sm:text-lg font-semibold text-gray-800 mb-2.5 sm:mb-4 tracking-tight relative">
@@ -288,8 +222,6 @@ const ChancayPlano = () => {
           </h3>
 
           <div className="space-y-1.5 sm:space-y-3 relative">
-            
-            {/* Vendidos */}
             <div className="flex items-center gap-1.5 sm:gap-3 group cursor-pointer transition-all duration-200 hover:bg-gray-50/50 p-1.5 sm:p-2 rounded-md">
               <div className="relative">
                 <div className="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-md bg-gradient-to-br from-red-500 to-red-600 shadow-sm"></div>
@@ -301,7 +233,6 @@ const ChancayPlano = () => {
               </div>
             </div>
 
-            {/* Separados */}
             <div className="flex items-center gap-1.5 sm:gap-3 group cursor-pointer transition-all duration-200 hover:bg-gray-50/50 p-1.5 sm:p-2 rounded-md">
               <div className="relative">
                 <div className="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-md bg-gradient-to-br from-amber-400 to-amber-500 shadow-sm border border-amber-300/50"></div>
@@ -313,7 +244,6 @@ const ChancayPlano = () => {
               </div>
             </div>
 
-            {/* Áreas verdes */}
             <div className="flex items-center gap-1.5 sm:gap-3 group cursor-pointer transition-all duration-200 hover:bg-gray-50/50 p-1.5 sm:p-2 rounded-md">
               <div className="relative">
                 <div className="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-md bg-gradient-to-br from-emerald-500 to-emerald-600 shadow-sm"></div>
@@ -325,7 +255,6 @@ const ChancayPlano = () => {
               </div>
             </div>
 
-            {/* Disponibles */}
             <div className="flex items-center gap-1.5 sm:gap-3 group cursor-pointer transition-all duration-200 hover:bg-gray-50/50 p-1.5 sm:p-2 rounded-md">
               <div className="relative">
                 <div className="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-md bg-gradient-to-br from-white to-gray-50 shadow-sm border border-gray-300/60"></div>
@@ -336,34 +265,30 @@ const ChancayPlano = () => {
                 <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-gray-400/60 group-hover:scale-125 transition-transform"></div>
               </div>
             </div>
-
           </div>
         </div>
 
-        {/* CONTENEDOR DEL MAPA - CORREGIDO */}
+        {/* CONTENEDOR DEL MAPA */}
         <div
           ref={containerRef}
           className="
             relative w-full overflow-hidden 
             rounded-2xl flex justify-center items-center
-            border-4 border-[#cb4a2a]
+            border-4 border-[#2c976a]
             h-[70vh] min-h-[500px] sm:h-[900px] md:h-[1200px]
             bg-white
           "
         >
-
-          {/* ZOOM BUTTONS - SOLO BOLITAS RETRO */}
+          {/* ZOOM BUTTONS */}
           <div className="absolute top-4 right-4 z-20 flex flex-col gap-2 sm:gap-3">
-
-            {/* ZOOM IN (NARANJA) */}
             <button
               onClick={handleZoomIn}
               className="
                 p-2 sm:p-3 rounded-full
-                bg-[#cb4a2a]
-                border-2 border-[#a33d22]
-                shadow-[2px_2px_0px_#a33d22] sm:shadow-[3px_3px_0px_#a33d22]
-                hover:shadow-[1px_1px_0px_#a33d22]
+                bg-[#2c976a]
+                border-2 border-[#1e6d4c]
+                shadow-[2px_2px_0px_#1e6d4c] sm:shadow-[3px_3px_0px_#1e6d4c]
+                hover:shadow-[1px_1px_0px_#1e6d4c]
                 hover:translate-x-[1px] hover:translate-y-[1px]
                 transition-all
               "
@@ -376,7 +301,6 @@ const ChancayPlano = () => {
               </svg>
             </button>
 
-            {/* ZOOM OUT (GRIS) */}
             <button
               onClick={handleZoomOut}
               className="
@@ -397,7 +321,6 @@ const ChancayPlano = () => {
               </svg>
             </button>
 
-            {/* RESET (AZUL) */}
             <button
               onClick={resetZoom}
               className="
@@ -420,14 +343,13 @@ const ChancayPlano = () => {
                 />
               </svg>
             </button>
-
           </div>
 
-          {/* MAPA - VERSIÓN CORREGIDA CON DRAG FUNCIONAL */}
+          {/* MAPA */}
           <motion.img
             ref={imageRef}
-            src="/Home/PLANO .jpg"
-            alt="Plano del Proyecto"
+            src={planoUrl || "/Home/PLANO .jpg"}
+            alt="Plano del Proyecto Chancay 101"
             className="
               max-w-none
               object-contain
@@ -459,7 +381,6 @@ const ChancayPlano = () => {
               resetZoom();
             }}
             onDragStart={() => {
-              // Previene selección de texto durante el drag
               document.body.style.cursor = 'grabbing';
             }}
             onDragEnd={() => {
@@ -468,7 +389,6 @@ const ChancayPlano = () => {
           />
         </div>
       </div>
-
     </motion.section>
   );
 };

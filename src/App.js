@@ -26,6 +26,7 @@ function App() {
             <Route path="/mapa-lotes" element={<MapaLotes />} />
           </Routes>
         </div>
+        
 
         {/* 🔹 Footer en todas las páginas */}
         <Footer />

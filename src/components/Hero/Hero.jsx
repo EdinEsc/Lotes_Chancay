@@ -170,7 +170,7 @@ const Hero = () => {
 
   const heroImages = [
     "/Home/Chan1.jpg",
-    "/Home/Chan2.jpg"
+    // "/Home/Chan2.jpg"
   ];
 
   useEffect(() => {
@@ -309,94 +309,57 @@ const Hero = () => {
   return (
     <>
       <section className="relative w-full min-h-screen overflow-hidden">
-        {/* Fondo con gradiente */}
-        <div className="absolute inset-0">
-          {heroImages.map((image, index) => (
-            <motion.div
-              key={index}
-              className={`absolute inset-0 transition-opacity duration-1000 ${
-                index === currentSlide ? "opacity-100" : "opacity-0"
-              }`}
-              initial={{ scale: 1.1 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 10, ease: "linear" }}
-            >
-              <img src={image} alt={`Slide ${index}`} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
-            </motion.div>
-          ))}
-        </div>
+
+      {/* Fondo con gradiente */}
+      <div className="absolute inset-x-0" style={{ top: "350px", height: "calc(100vh - 100px)" }}>
+        {heroImages.map((image, index) => (
+          <motion.div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              index === currentSlide ? "opacity-100" : "opacity-0"
+            }`}
+            initial={{ scale: 1.1 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 10, ease: "linear" }}
+          >
+            <img
+              src={image}
+              alt={`Slide ${index}`}
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
+        ))}
+      </div>
+
+
+
+
 
         {/* Contenido principal */}
         <div className="relative z-10 min-h-screen flex items-center py-16 lg:py-20">
           <div className="max-w-7xl mx-auto px-6 w-full">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
               
-              {/* Texto principal */}
-              <motion.div
-                className="text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)] pt-8 lg:pt-0"
-                initial="initial"
-                animate="animate"
+            {/* Texto principal */}
+            <motion.div
+              className="pt-8 lg:pt-0 text-left -ml-16 md:-ml-24 lg:-ml-32" // Más empujado a la izquierda
+              initial="initial"
+              animate="animate"
+            >
+              <motion.h1
+                className="text-[clamp(1.5rem,6vw,4rem)] font-extrabold leading-snug mb-4 text-[#32d28a] tracking-tight uppercase whitespace-nowrap"
+                variants={slideInLeft}
               >
+                Dueño de una vida mejor
+              </motion.h1>
+              <motion.p
+                className="text-[clamp(1rem,3vw,2rem)] font-medium text-[#32d28a] italic"
+                variants={slideInLeft}
+              >
+                Descubre lo que tenemos para ti
+              </motion.p>
+            </motion.div>
 
-                <motion.h1
-                  className="text-5xl md:text-5xl lg:text-7xl xl:text-8xl font-extrabold leading-tight mb-8 text-white"
-                  variants={slideInLeft}
-                >
-                  Tu Terreno
-                  <span className="block text-[#32d28a] drop-shadow-lg mt-2">Tu Futuro</span>
-                  <span className="block text-3xl md:text-3xl lg:text-4xl mt-6 font-semibold text-gray-100">Garantizado</span>
-                </motion.h1>
-
-                <motion.p
-                  className="text-xl md:text-xl lg:text-2xl mb-10 text-gray-200 max-w-2xl leading-relaxed"
-                  variants={fadeInUp}
-                >
-                  Construye el hogar de tus sueños con los mejores terrenos
-                  <span className="text-[#32d28a] font-bold"> desde S/ 17,200</span> soles.
-                </motion.p>
-
-                {/* Cuota inicial */}
-                <motion.div
-                  className="text-white text-2xl lg:text-3xl font-bold mb-10"
-                  variants={fadeInUp}
-                >
-                  Cuota inicial del 50%
-                </motion.div>
-
-{/* Botones */}
-<motion.div 
-  className="flex flex-col sm:flex-row gap-4 mb-8 lg:mb-0 justify-center" 
-  variants={fadeInUp}
->
-  <Link to="/contacto">
-    <motion.button
-      className="bg-[#32d28a] hover:bg-[#27a56f] text-white font-bold py-3 px-4 lg:px-6 rounded-xl text-base shadow-lg transition-all flex items-center justify-center gap-2"
-      whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(50,210,138,0.5)" }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <ArrowRight className="w-5 h-5" />
-      ¡Quiero mi Lote!
-    </motion.button>
-  </Link>
-</motion.div>
-
-{/* Imagen de descuento debajo del botón */}
-<motion.div 
-  className="mt-6 flex justify-center"
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.5, duration: 0.8 }}
->
-  <img 
-    src="/Home/descuento.jpg" 
-    alt="Descuento especial" 
-    className="max-w-sm md:max-w-md lg:max-w-xl rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
-  />
-</motion.div>
-
-
-              </motion.div>
 
               {/* Formulario a la derecha */}
               <motion.div 

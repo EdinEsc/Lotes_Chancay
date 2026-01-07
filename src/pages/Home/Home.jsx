@@ -2,7 +2,7 @@
 // import { MapPin, Ruler } from "lucide-react";
 // import { motion } from "framer-motion";
 // import { Link } from "react-router-dom";
-import Testimonios from '../../components/Testimonios/Testimonios';
+// import Testimonios from '../../components/Testimonios/Testimonios';
 import Team from '../../components/Team/Team';
 import Hero from '../../components/Hero/Hero';
 // import Formulario from '../../components/Formulario/Formulario';
@@ -12,10 +12,11 @@ import Hero from '../../components/Hero/Hero';
 // import Proyecto from "../../components/Proyecto/Proyecto";
 import Proyecto1 from "../../components/Proyecto1/Proyecto1";
 import Ubicacion from "../../components/Proyecto1/Ubicacion";
-import AFPSection from "../../components/Proyecto1/AFPSection";
+// import AFPSection from "../../components/Proyecto1/AFPSection";
 import BlogPie from "../../components/Blog/Blogpie";
 import Galeria from '../../components/Lotes/Galeria';
-
+import SectionBackground from '../../components/Background/SectionBackground';
+import ContactForm from "../../components/Contac/ContactForm";
 
 const Home = () => {
 
@@ -23,24 +24,29 @@ const Home = () => {
   <div className="w-full overflow-x-hidden -mt-[80px] sm:-mt-[96px] md:-mt-[112px] lg:-mt-[128px]">
 
 
-      {/* SECCIÓN PRINCIPAL HERO - Lo primero que se ve */}
-      <section id="inicio">
-        <Hero />
-      </section>
 
-      <AFPSection />
+      <SectionBackground />
+      <ContactForm />
+
+      {/* SECCIÓN PRINCIPAL HERO - Lo primero que se ve */}
+      {/* <section id="inicio">
+        <Hero />
+      </section> */}
+
+      {/* <AFPSection /> */}
       {/* SECCIÓN FORMULARIO */}
       {/* <section id="formulario">
         <Formulario />
       </section> */}
-
-      <Ubicacion/>
+      
+      <Proyecto1 />
+      {/* <Ubicacion/> */}
 
       {/* SECCIÓN FORMULARIO */}
       {/* <section id="formulario">
         <Formulario22 />
       </section> */}
-      <Proyecto1 />
+      
 
       
       {/* Otras secciones */}
@@ -54,14 +60,14 @@ const Home = () => {
       
       <Galeria />
       {/* 🔹 NUEVA SECCIÓN - Equipo */}
-      <section id="equipo">
+      {/* <section id="equipo">
         <Team />
-      </section>
+      </section> */}
 
       {/* Otras secciones */}
       {/* <Compra /> */}
   
-
+      {/* <ContactForm /> */}
       {/* Otras secciones */}
       {/* <Noticias /> */}
 
