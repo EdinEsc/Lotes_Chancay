@@ -182,7 +182,7 @@ const ChancayPlano = () => {
       </div>
 
       {/* ---------------------- CARRUSEL ---------------------- */}
-      <div className="w-full max-w-2xl mx-auto mb-14">
+      {/* <div className="w-full max-w-2xl mx-auto mb-14">
         <div className="relative w-full h-20 md:h-28">
           {carouselImages.map((img, index) => (
             <motion.img
@@ -196,7 +196,7 @@ const ChancayPlano = () => {
             />
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* ---------------------- PLANO INTERACTIVO ---------------------- */}
       <div id="plano-lotes" className="relative max-w-7xl mx-auto">
