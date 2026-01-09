@@ -240,7 +240,7 @@ const Galeria = () => {
 
   return (
     <div className="min-h-screen bg-[#2c976a] py-10 px-2 sm:px-4 lg:px-6">
-      <div className="max-w-[95%] mx-auto">
+      <div className="max-w-[90%] mx-auto">
 
         {/* TÍTULO */}
         <div className="text-center mb-10">

@@ -26,7 +26,11 @@ const Home = () => {
 
 
       <SectionBackground />
-      <ContactForm />
+      {/* <ContactForm /> */}
+      <section id="contacto" className="scroll-mt-20">
+        <ContactForm />
+      </section>
+
 
       {/* SECCIÓN PRINCIPAL HERO - Lo primero que se ve */}
       {/* <section id="inicio">
@@ -71,7 +75,7 @@ const Home = () => {
       {/* Otras secciones */}
       {/* <Noticias /> */}
 
-      <BlogPie />
+      {/* <BlogPie /> */}
 
     </div>
   );

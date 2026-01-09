@@ -120,7 +120,7 @@ const Header = () => {
           </div>
 
           {/* Botón Contacto Desktop (CORREGIDO A LINK) */}
-          <div className="hidden lg:flex items-center mr-4">
+          {/* <div className="hidden lg:flex items-center mr-4">
             <Link
               to="/contacto"
               className="flex items-center space-x-2 px-6 py-3 rounded-full bg-[#cb4a2a] text-white font-bold hover:bg-[#b54325] transition-all shadow-lg hover:shadow-xl transform hover:scale-105 animate-pulse"
@@ -128,7 +128,17 @@ const Header = () => {
               <UserPlus className="h-5 w-5" />
               <span>CONTACTANOS</span>
             </Link>
+          </div> */}
+          <div className="hidden lg:flex items-center mr-4">
+            <a
+              href="#contacto"
+              className="flex items-center space-x-2 px-6 py-3 rounded-full bg-[#cb4a2a] text-white font-bold hover:bg-[#b54325] transition-all shadow-lg hover:shadow-xl transform hover:scale-105 animate-pulse"
+            >
+              <UserPlus className="h-5 w-5" />
+              <span>CONTACTANOS</span>
+            </a>
           </div>
+
 
           {/* Hamburguesa */}
           <div className="lg:hidden mr-4">
@@ -202,14 +212,24 @@ const Header = () => {
             <div className="border-t border-[#2c976a]/20 my-2"></div>
 
             {/* ⭐ BOTÓN CONTACTO CORREGIDO EN MÓVIL */}
-            <Link 
+            {/* <Link 
               to="/contacto" 
               className="flex items-center justify-center space-x-2 px-4 py-4 bg-[#cb4a2a] text-white font-bold rounded-xl hover:bg-[#b54325] shadow-lg animate-pulse"
               onClick={closeMenu}
             >
               <UserPlus className="h-5 w-5" />
               <span>CONTACTANOS</span>
-            </Link>
+            </Link> */}
+
+            <a
+              href="#contacto"
+              className="flex items-center justify-center space-x-2 px-4 py-4 bg-[#cb4a2a] text-white font-bold rounded-xl hover:bg-[#b54325] shadow-lg animate-pulse"
+              onClick={closeMenu}
+            >
+              <UserPlus className="h-5 w-5" />
+              <span>CONTACTANOS</span>
+            </a>
+
 
             <div className="mt-6 p-4 bg-[#2c976a]/10 rounded-xl text-sm text-[#2c976a] space-y-2">
               <div className="flex items-center">

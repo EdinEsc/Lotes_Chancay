@@ -258,12 +258,12 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link 
-                    to="/contacto" 
+                  <a
+                    href="#contacto"
                     className="text-gray-300 hover:text-white transition-colors duration-300 block py-1"
                   >
                     Contacto
-                  </Link>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -352,19 +352,25 @@ const Footer = () => {
                   <div>Domingos: Cerrado</div>
                 </div>
               </div>
-              <div>
-                <h4 className="text-xl font-bold mb-4 text-white">Newsletter</h4>
-                <div className="flex gap-2">
-                  <input 
-                    type="email" 
-                    placeholder="Tu correo electrónico"
-                    className="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-[#cb4a2a]"
-                  />
-                  <button className="bg-[#cb4a2a] hover:bg-[#b33e24] text-white font-semibold px-6 rounded-lg transition-colors duration-300">
-                    Suscribir
-                  </button>
+
+                <div>
+                  <h4 className="text-xl font-bold mb-4 text-white">
+                    Acreditado por SUNARP
+                  </h4>
+
+                  <p className="text-gray-300 mb-6">
+                    Empresa formalmente registrada y acreditada, cumpliendo con la normativa vigente.
+                  </p>
+
+                  {/* Logo SUNARP */}
+                  <div className="flex items-center">
+                    <img
+                      src="/sunarp-blanco.png"
+                      alt="SUNARP"
+                      className="h-24 object-contain"
+                    />
+                  </div>
                 </div>
-              </div>
             </div>
 
             {/* 🔹 Línea inferior */}
