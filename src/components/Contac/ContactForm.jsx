@@ -442,31 +442,42 @@ export default function ContactForm() {
         <div className="bg-white pt-20 pb-20">
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
             {/* TEXTO */}
-           <motion.div
-  className="pt-8 lg:pt-0 mt-6 text-left ml-0 md:-ml-24 lg:-ml-32 font-[Poppins]"
-  initial="initial"
-  animate="animate"
->
 
+            <motion.div
+              className="pt-8 lg:pt-0 mt-6 text-left ml-0 md:-ml-24 lg:-ml-32 font-[Poppins]"
+              initial="initial"
+              animate="animate"
+            >
+              {/* TÍTULO */}
               <motion.h2
-                className="text-[clamp(1.6rem,5vw,3.2rem)]
-                          font-semibold leading-snug mb-4
-                          text-[#2c976a] tracking-wide uppercase
-                          whitespace-nowrap"
+                className="
+                  text-[clamp(2.6rem,5.5vw,3.6rem)]
+                  md:text-[clamp(3.2rem,5vw,4.4rem)]
+                  font-extrabold tracking-tight
+                  bg-gradient-to-r from-[#2c976a] via-[#4ac48e] to-[#2c976a]
+                  bg-clip-text text-transparent
+                  mb-4 drop-shadow-lg
+                  whitespace-nowrap
+                "
                 variants={slideInLeft}
               >
                 Dueño de una vida mejor
               </motion.h2>
 
+              {/* SUBTEXTO */}
               <motion.p
-                className="text-[clamp(1.1rem,3vw,2rem)]
-                          font-medium text-[#2c976a]
-                          leading-relaxed"
+                className="
+                  text-[clamp(1.1rem,3vw,1.9rem)]
+                  font-medium text-[#2c976a]
+                  leading-relaxed
+                "
                 variants={slideInLeft}
               >
                 Descubre lo que tenemos para ti
               </motion.p>
             </motion.div>
+
+
 
             {/* FORMULARIO */}
             <div className="flex justify-center md:justify-end relative z-20">

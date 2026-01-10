@@ -17,6 +17,7 @@ import BlogPie from "../../components/Blog/Blogpie";
 import Galeria from '../../components/Lotes/Galeria';
 import SectionBackground from '../../components/Background/SectionBackground';
 import ContactForm from "../../components/Contac/ContactForm";
+import Referencias from "../../components/Referencias/Referencias"
 
 const Home = () => {
 
@@ -76,7 +77,7 @@ const Home = () => {
       {/* <Noticias /> */}
 
       {/* <BlogPie /> */}
-
+        <Referencias/>
     </div>
   );
 };
