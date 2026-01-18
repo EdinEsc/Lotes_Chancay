@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 
-// Componente Modal que se incluye dentro del Footer
 const TermsModal = ({ isOpen, onClose, type }) => {
   if (!isOpen) return null;
 
-  // Contenido para cada tipo de modal
+
   const content = {
     terms: [
       {
@@ -87,21 +86,18 @@ const TermsModal = ({ isOpen, onClose, type }) => {
     ]
   };
 
-  // Determinar el título según el tipo
   const title = type === "terms" 
     ? "Términos y Condiciones" 
     : type === "privacy" 
       ? "Política de Privacidad" 
       : "Política de Cookies";
 
-  // Determinar el subtítulo según el tipo
   const subtitle = type === "terms" 
     ? "Por favor, lee detenidamente cada punto antes de aceptar"
     : type === "privacy"
       ? "Conoce cómo protegemos y utilizamos tu información personal"
       : "Información sobre el uso de cookies en nuestro sitio web";
 
-  // Obtener los items correspondientes
   const items = content[type === "terms" ? "terms" : type === "privacy" ? "privacy" : "cookies"];
 
   return (
@@ -112,7 +108,7 @@ const TermsModal = ({ isOpen, onClose, type }) => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        {/* Fondo oscuro */}
+
         <motion.div
           className="absolute inset-0 bg-black/70 backdrop-blur-sm"
           onClick={onClose}
@@ -121,7 +117,7 @@ const TermsModal = ({ isOpen, onClose, type }) => {
           exit={{ opacity: 0 }}
         />
 
-        {/* Modal */}
+ 
         <motion.div
           className="relative bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden"
           initial={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -129,7 +125,7 @@ const TermsModal = ({ isOpen, onClose, type }) => {
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
           transition={{ type: "spring", damping: 25 }}
         >
-          {/* Header */}
+     
           <div className="sticky top-0 z-10 bg-[#2c976a] p-6 text-white">
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-bold">{title}</h2>
@@ -145,7 +141,6 @@ const TermsModal = ({ isOpen, onClose, type }) => {
             </p>
           </div>
 
-          {/* Contenido */}
           <div className="p-6 md:p-8 overflow-y-auto max-h-[calc(90vh-120px)]">
             <div className="space-y-6">
               {items.map((item) => (
@@ -175,7 +170,6 @@ const TermsModal = ({ isOpen, onClose, type }) => {
               ))}
             </div>
 
-            {/* Footer del modal */}
             <div className="mt-8 pt-6 border-t border-gray-200">
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <p className="text-gray-600 text-sm text-center sm:text-left">
@@ -200,13 +194,11 @@ const TermsModal = ({ isOpen, onClose, type }) => {
   );
 };
 
-// Componente Footer principal
+
 const Footer = () => {
-  // Estados para controlar el modal desde el Footer
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState("terms");
 
-  // Función para abrir el modal
   const openModal = (type) => {
     setModalType(type);
     setModalOpen(true);
@@ -216,11 +208,9 @@ const Footer = () => {
     <>
       <footer className="bg-gradient-to-b from-gray-900 to-black text-white py-16 px-6">
         <div className="max-w-7xl mx-auto">
-          
-          {/* 🔹 Contenido principal en grid */}
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
-            
-            {/* Logo y descripción - 4 columnas */}
+
             <div className="lg:col-span-4">
               <div className="mb-6">
                 <img
@@ -235,7 +225,6 @@ const Footer = () => {
               </p>
             </div>
 
-            {/* Enlaces rápidos - 2 columnas */}
             <div className="lg:col-span-2">
               <h3 className="text-2xl font-bold mb-6 text-white border-l-4 border-[#cb4a2a] pl-3">
                 Navegación
@@ -258,17 +247,16 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <a
-                    href="#contacto"
+                  <Link
+                    to="/#contacto"
                     className="text-gray-300 hover:text-white transition-colors duration-300 block py-1"
                   >
                     Contacto
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
 
-            {/* Contacto - 3 columnas */}
             <div className="lg:col-span-3">
               <h3 className="text-2xl font-bold mb-6 text-white border-l-4 border-[#2c976a] pl-3">
                 Contacto
@@ -289,7 +277,6 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* Redes sociales - 3 columnas */}
             <div className="lg:col-span-3">
               <h3 className="text-2xl font-bold mb-6 text-white border-l-4 border-[#cb4a2a] pl-3">
                 Conéctate
@@ -339,10 +326,8 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* 🔹 Línea separadora */}
           <div className="border-t border-gray-700 pt-8">
-            
-            {/* Información adicional */}
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
               <div>
                 <h4 className="text-xl font-bold mb-4 text-white">Horario de Atención</h4>
@@ -362,7 +347,6 @@ const Footer = () => {
                     Empresa formalmente registrada y acreditada, cumpliendo con la normativa vigente.
                   </p>
 
-                  {/* Logo SUNARP */}
                   <div className="flex items-center">
                     <img
                       src="/sunarp-blanco.png"
@@ -373,14 +357,13 @@ const Footer = () => {
                 </div>
             </div>
 
-            {/* 🔹 Línea inferior */}
             <div className="text-center pt-8 border-t border-gray-700">
               <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-gray-400">
                 <div className="text-lg">
                   © {new Date().getFullYear()} <span className="text-white font-bold">Chancay 101</span>. Todos los derechos reservados.
                 </div>
                 <div className="flex gap-6 text-sm">
-                  {/* Botones que abren el modal */}
+
                   <button
                     onClick={() => openModal("privacy")}
                     className="hover:text-white transition-colors duration-300"
@@ -406,7 +389,6 @@ const Footer = () => {
         </div>
       </footer>
 
-      {/* Modal que se renderiza desde el Footer */}
       <TermsModal 
         isOpen={modalOpen} 
         onClose={() => setModalOpen(false)} 

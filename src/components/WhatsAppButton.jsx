@@ -1,7 +1,7 @@
 import React from "react";
 
 const WhatsAppButton = () => {
-  const phone = "51999999999"; // 👉 Cambia por tu número con código de país
+  const phone = "51983722524"; 
   const message = "¡Hola! Quisiera más información sobre sus terrenos.";
 
   const handleClick = () => {
@@ -11,20 +11,14 @@ const WhatsAppButton = () => {
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      {/* 🔘 Luz pulsante */}
       <div className="absolute inset-0 w-16 h-16 rounded-full bg-green-500 opacity-75 animate-ping"></div>
-
-      {/* 🟢 Botón principal */}
       <button
         onClick={handleClick}
         className="relative w-16 h-16 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center text-white shadow-lg transition-transform transform hover:scale-110"
       >
-        {/* 🔔 Contador */}
         <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full px-1.5 py-0.5 shadow-md">
           1
         </span>
-
-        {/* 🔹 Icono de WhatsApp (SVG) */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 32 32"

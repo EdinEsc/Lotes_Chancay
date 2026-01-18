@@ -6,7 +6,7 @@ import BlogPie from "../../components/Blog/Blogpie";
 
 const images = [
   {
-    id: 2, // 🔗 Vinculado al post con id 2
+    id: 2,
     src: "/Blog/Blog1.jpg",
     title: "Nuevas Tendencias en Chancay",
     description: "Descubre cómo está creciendo la inversión en esta zona costera.",

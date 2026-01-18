@@ -1,8 +1,20 @@
+// import axios from "axios";
+
+// const api = axios.create({
+//   baseURL: process.env.REACT_APP_API_URL + "/api",
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+// });
+
+// export default api;
+
+
 import axios from "axios";
 
-// Crear una instancia de Axios
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8000/api", // <-- aquí va la URL base de tu backend
+  
+  baseURL: process.env.REACT_APP_API_URL, 
   headers: {
     "Content-Type": "application/json",
   },

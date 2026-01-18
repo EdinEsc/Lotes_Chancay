@@ -30,7 +30,7 @@ const Header = () => {
     setOpenSubmenu(null);
   };
 
-  // ⭐ Scroll a plano de lotes aunque esté en otra página
+
   const scrollToPlano = () => {
     if (location.pathname !== "/") {
       navigate("/#go-plano");
@@ -46,16 +46,33 @@ const Header = () => {
     }
   };
 
+
+const scrollToContacto = () => {
+  if (location.pathname !== "/") {
+    navigate("/#contacto");
+    return;
+  }
+
+  const section = document.getElementById("contacto");
+  if (section) {
+    section.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }
+};
+
+
+
   return (
     <header className="fixed top-0 left-0 w-full bg-white z-50 shadow-lg border-b-2 border-[#2c976a]">
 
-      {/* Barra superior */}
       <div className="bg-[#2c976a] text-white py-2 px-4 text-sm">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center space-y-1 sm:space-y-0">
           <div className="flex items-center space-x-6">
             <div className="flex items-center">
               <Phone className="h-4 w-4 mr-2" />
-              <span>+51 987 654 321</span>
+              <span>+51 983 722 524</span>
             </div>
 
             <div className="flex items-center">
@@ -70,11 +87,9 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Navegación principal */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav className="flex items-center justify-between h-20">
 
-          {/* Logo */}
           <Link 
             to="/" 
             className="flex-shrink-0 flex items-center ml-4 lg:ml-8 xl:ml-12 mr-8 lg:mr-12"
@@ -86,7 +101,6 @@ const Header = () => {
             />
           </Link>
 
-          {/* Menú Desktop */}
           <div className="hidden lg:flex lg:items-center lg:space-x-10">
 
             <Link 
@@ -107,7 +121,6 @@ const Header = () => {
               <span className="absolute left-0 bottom-[-6px] w-0 h-1 bg-[#cb4a2a] group-hover:w-full transition-all"></span>
             </Link>
 
-            {/* ⭐ BOTÓN Scroll real al plano de lotes */}
             <button
               onClick={scrollToPlano}
               className="relative text-[#2c976a] font-bold text-[1.1rem] group flex items-center"
@@ -119,28 +132,26 @@ const Header = () => {
 
           </div>
 
-          {/* Botón Contacto Desktop (CORREGIDO A LINK) */}
-          {/* <div className="hidden lg:flex items-center mr-4">
-            <Link
-              to="/contacto"
+          <div className="hidden lg:flex items-center mr-4 space-x-4">
+
+            <button
+              onClick={scrollToContacto}
               className="flex items-center space-x-2 px-6 py-3 rounded-full bg-[#cb4a2a] text-white font-bold hover:bg-[#b54325] transition-all shadow-lg hover:shadow-xl transform hover:scale-105 animate-pulse"
             >
               <UserPlus className="h-5 w-5" />
               <span>CONTACTANOS</span>
-            </Link>
-          </div> */}
-          <div className="hidden lg:flex items-center mr-4">
-            <a
-              href="#contacto"
-              className="flex items-center space-x-2 px-6 py-3 rounded-full bg-[#cb4a2a] text-white font-bold hover:bg-[#b54325] transition-all shadow-lg hover:shadow-xl transform hover:scale-105 animate-pulse"
-            >
-              <UserPlus className="h-5 w-5" />
-              <span>CONTACTANOS</span>
-            </a>
+            </button>
+
+            <img
+              src="/sunarp-blanco.png"
+              alt="Sunarp"
+              className="h-14 w-auto object-contain"
+
+            />
+
           </div>
 
 
-          {/* Hamburguesa */}
           <div className="lg:hidden mr-4">
             <button
               className="p-3 rounded-xl text-[#2c976a] hover:bg-[#2c976a]/10 transition-all"
@@ -155,7 +166,6 @@ const Header = () => {
         </nav>
       </div>
 
-      {/* Menú móvil */}
       <div
         className={`lg:hidden fixed inset-0 z-40 transition-all ${
           menuActive ? 'bg-black/50' : 'bg-transparent pointer-events-none'
@@ -169,7 +179,6 @@ const Header = () => {
           onClick={(e) => e.stopPropagation()}
         >
 
-          {/* Header Menú */}
           <div className="flex justify-between items-center p-6 border-b border-[#2c976a]/20 bg-[#2c976a]/10">
             <img src={logo} className="h-14 w-auto" alt="Lotes" />
             <button className="p-2 rounded-lg text-[#2c976a] hover:bg-[#2c976a]/10" onClick={toggleMenu}>
@@ -197,7 +206,6 @@ const Header = () => {
               Nosotros
             </Link>
 
-            {/* ⭐ Scroll también en móvil */}
             <button 
               onClick={() => {
                 scrollToPlano();
@@ -211,30 +219,24 @@ const Header = () => {
 
             <div className="border-t border-[#2c976a]/20 my-2"></div>
 
-            {/* ⭐ BOTÓN CONTACTO CORREGIDO EN MÓVIL */}
-            {/* <Link 
-              to="/contacto" 
-              className="flex items-center justify-center space-x-2 px-4 py-4 bg-[#cb4a2a] text-white font-bold rounded-xl hover:bg-[#b54325] shadow-lg animate-pulse"
-              onClick={closeMenu}
-            >
-              <UserPlus className="h-5 w-5" />
-              <span>CONTACTANOS</span>
-            </Link> */}
+         
+            <button
+                onClick={() => {
+                  scrollToContacto();
+                  closeMenu();
+                }}
+                className="flex items-center justify-center space-x-2 px-4 py-4 bg-[#cb4a2a] text-white font-bold rounded-xl hover:bg-[#b54325] shadow-lg animate-pulse"
+              >
+                <UserPlus className="h-5 w-5" />
+                <span>CONTACTANOS</span>
+              </button>
 
-            <a
-              href="#contacto"
-              className="flex items-center justify-center space-x-2 px-4 py-4 bg-[#cb4a2a] text-white font-bold rounded-xl hover:bg-[#b54325] shadow-lg animate-pulse"
-              onClick={closeMenu}
-            >
-              <UserPlus className="h-5 w-5" />
-              <span>CONTACTANOS</span>
-            </a>
 
 
             <div className="mt-6 p-4 bg-[#2c976a]/10 rounded-xl text-sm text-[#2c976a] space-y-2">
               <div className="flex items-center">
                 <Phone className="h-4 w-4 mr-2" />
-                <span>+51 987 654 321</span>
+                <span>+51 983 722 524</span>
               </div>
 
               <div className="flex items-center">

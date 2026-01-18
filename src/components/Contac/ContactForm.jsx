@@ -1,194 +1,3 @@
-// import { useState, useEffect } from "react";
-// import api from "../../api/axios";
-// import { motion } from "framer-motion";
-
-// export default function ContactForm() {
-//   const [form, setForm] = useState({
-//     nombre: "",
-//     email: "",
-//     telefono: "",
-//     mensaje: "",
-//   });
-
-//   const [loading, setLoading] = useState(false);
-//   const [msg, setMsg] = useState("");
-//   const [bgImage, setBgImage] = useState(null);
-
-//   // 🔄 CARGAR IMAGEN DE FONDO DESDE BACKEND
-//   useEffect(() => {
-//     api
-//       .get("/page-image/contact_background") // 👈 KEY
-//       .then((res) => setBgImage(res.data.url))
-//       .catch(() => setBgImage(null));
-//   }, []);
-
-//   const handleChange = (e) => {
-//     setForm({ ...form, [e.target.name]: e.target.value });
-//   };
-
-//   // 🎬 Animación
-//   const slideInLeft = {
-//     initial: { x: -80, opacity: 0 },
-//     animate: {
-//       x: 0,
-//       opacity: 1,
-//       transition: { duration: 0.8, ease: "easeOut" },
-//     },
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     setLoading(true);
-//     setMsg("");
-
-//     try {
-//       // Backend
-//       await api.post("/contacto", form);
-
-//       // Formspree
-//       await fetch("https://formspree.io/f/xyzrpqjg", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//           Accept: "application/json",
-//         },
-//         body: JSON.stringify(form),
-//       });
-
-//       setMsg("✅ Mensaje enviado correctamente");
-//       setForm({ nombre: "", email: "", telefono: "", mensaje: "" });
-//     } catch (error) {
-//       setMsg("❌ Error al enviar el mensaje");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   return (
-//     <section className="w-full relative">
-//       {/* 🔹 BLOQUE BLANCO */}
-//       <div className="bg-white pt-20 pb-20">
-//         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
-//           {/* TEXTO */}
-//           <motion.div
-//             className="pt-8 lg:pt-0 text-left ml-0 md:-ml-24 lg:-ml-32 font-[Poppins]"
-//             initial="initial"
-//             animate="animate"
-//           >
-//           <motion.h2
-//             className="text-[clamp(1.6rem,5vw,3.2rem)]
-//                       font-semibold leading-snug mb-4
-//                       text-[#2c976a] tracking-wide uppercase
-//                       whitespace-nowrap"
-//             variants={slideInLeft}
-//           >
-//             Dueño de una vida mejor
-//           </motion.h2>
-
-
-//             <motion.p
-//               className="text-[clamp(1.1rem,3vw,2rem)]
-//                         font-medium text-[#2c976a]
-//                         leading-relaxed"
-//               variants={slideInLeft}
-//             >
-//               Descubre lo que tenemos para ti
-//             </motion.p>
-//           </motion.div>
-
-
-//           {/* FORMULARIO */}
-//           <div className="flex justify-center md:justify-end relative z-20">
-//             <div
-//               className="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md
-//                          border border-[#2c976a]/40"
-//             >
-//               <h3 className="text-[#2c976a] font-bold text-lg mb-4 text-center">
-//                 Quiero recibir información
-//               </h3>
-
-//               <form onSubmit={handleSubmit} className="space-y-4">
-//                 <input
-//                   name="nombre"
-//                   placeholder="Nombre"
-//                   value={form.nombre}
-//                   onChange={handleChange}
-//                   className="w-full p-3 rounded border border-[#2c976a]/50
-//                              focus:outline-none focus:ring-2 focus:ring-[#2c976a]"
-//                   required
-//                 />
-
-//                 <input
-//                   name="email"
-//                   type="email"
-//                   placeholder="Correo electrónico"
-//                   value={form.email}
-//                   onChange={handleChange}
-//                   className="w-full p-3 rounded border border-[#2c976a]/50
-//                              focus:outline-none focus:ring-2 focus:ring-[#2c976a]"
-//                   required
-//                 />
-
-//                 <input
-//                   name="telefono"
-//                   placeholder="Teléfono"
-//                   value={form.telefono}
-//                   onChange={handleChange}
-//                   className="w-full p-3 rounded border border-[#2c976a]/50
-//                              focus:outline-none focus:ring-2 focus:ring-[#2c976a]"
-//                 />
-
-//                 <textarea
-//                   name="mensaje"
-//                   placeholder="Mensaje"
-//                   value={form.mensaje}
-//                   onChange={handleChange}
-//                   className="w-full p-3 rounded min-h-[110px]
-//                              border border-[#2c976a]/50
-//                              focus:outline-none focus:ring-2 focus:ring-[#2c976a]"
-//                   required
-//                 />
-
-//                 <button
-//                   disabled={loading}
-//                   className="w-full bg-[#2c976a] hover:brightness-110
-//                              text-white font-bold py-3 rounded transition"
-//                 >
-//                   {loading ? "Enviando..." : "Solicitar información"}
-//                 </button>
-
-//                 {msg && (
-//                   <p className="text-[#2c976a] text-sm text-center mt-2">
-//                     {msg}
-//                   </p>
-//                 )}
-//               </form>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* 🔹 IMAGEN DE FONDO DINÁMICA */}
-//       <div
-//         className="-mt-96 h-[680px] bg-cover bg-center transition-all duration-300"
-
-
-
-
-//         style={{
-//           backgroundImage: bgImage
-//             ? `url(${bgImage})`
-//             : "url('/img/fondo.webp')", // fallback
-//         }}
-//       />
-//     </section>
-//   );
-// }
-
-
-
-
-
 import { useState, useEffect } from "react";
 import api from "../../api/axios";
 import { motion, AnimatePresence } from "framer-motion";
@@ -356,7 +165,7 @@ export default function ContactForm() {
   const [msg, setMsg] = useState("");
   const [bgImage, setBgImage] = useState(null);
 
-  // 🔄 CARGAR IMAGEN DE FONDO DESDE BACKEND
+
   useEffect(() => {
     api
       .get("/page-image/contact_background")
@@ -368,7 +177,7 @@ export default function ContactForm() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // 🎬 Animación
+
   const slideInLeft = {
     initial: { x: -80, opacity: 0 },
     animate: {
@@ -383,17 +192,20 @@ export default function ContactForm() {
     setModalOpen(true);
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!terminosAceptados) {
       setMsg("❌ Debes aceptar los Términos y Condiciones");
       return;
     }
 
-    const camposRequeridos = ['nombre', 'email', 'mensaje'];
-    const camposFaltantes = camposRequeridos.filter(campo => !form[campo].toString().trim());
-    
+    const camposRequeridos = ["nombre", "email", "mensaje"];
+    const camposFaltantes = camposRequeridos.filter(
+      (campo) => !form[campo].toString().trim()
+    );
+
     if (camposFaltantes.length > 0) {
       setMsg("❌ Completa todos los campos requeridos");
       return;
@@ -403,14 +215,12 @@ export default function ContactForm() {
     setMsg("");
 
     try {
-      // Backend
       await api.post("/contacto", {
         ...form,
         terminos: terminosAceptados ? "Aceptado" : "No aceptado",
-        politica: politicaAceptada ? "Aceptada" : "No aceptada"
+        politica: politicaAceptada ? "Aceptada" : "No aceptada",
       });
 
-      // Formspree
       await fetch("https://formspree.io/f/xyzrpqjg", {
         method: "POST",
         headers: {
@@ -420,7 +230,7 @@ export default function ContactForm() {
         body: JSON.stringify({
           ...form,
           terminos: terminosAceptados,
-          politica: politicaAceptada
+          politica: politicaAceptada,
         }),
       });
 
@@ -428,8 +238,18 @@ export default function ContactForm() {
       setForm({ nombre: "", email: "", telefono: "", mensaje: "" });
       setTerminosAceptados(false);
       setPoliticaAceptada(false);
+
+      setTimeout(() => {
+        setMsg("");
+      }, 4000);
+
     } catch (error) {
       setMsg("❌ Error al enviar el mensaje");
+
+  
+      setTimeout(() => {
+        setMsg("");
+      }, 5000);
     } finally {
       setLoading(false);
     }
@@ -438,33 +258,32 @@ export default function ContactForm() {
   return (
     <>
       <section className="w-full relative">
-        {/* 🔹 BLOQUE BLANCO */}
+ 
         <div className="bg-white pt-20 pb-20">
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
-            {/* TEXTO */}
+       
 
             <motion.div
-              className="pt-8 lg:pt-0 mt-6 text-left ml-0 md:-ml-24 lg:-ml-32 font-[Poppins]"
+              className="pt-8 lg:pt-0 mt-6 text-left ml-0 md:-ml-24 lg:-ml-32"
               initial="initial"
               animate="animate"
             >
-              {/* TÍTULO */}
-              <motion.h2
+        
+            <motion.h2
                 className="
-                  text-[clamp(2.6rem,5.5vw,3.6rem)]
-                  md:text-[clamp(3.2rem,5vw,4.4rem)]
-                  font-extrabold tracking-tight
+                  text-[clamp(2.2rem,5vw,3.2rem)]
+                  md:text-[clamp(2.8rem,4.5vw,4rem)]
+                  font-medium tracking-tight
                   bg-gradient-to-r from-[#2c976a] via-[#4ac48e] to-[#2c976a]
                   bg-clip-text text-transparent
-                  mb-4 drop-shadow-lg
+                  mb-4
                   whitespace-nowrap
                 "
-                variants={slideInLeft}
               >
                 Dueño de una vida mejor
               </motion.h2>
 
-              {/* SUBTEXTO */}
+
               <motion.p
                 className="
                   text-[clamp(1.1rem,3vw,1.9rem)]
@@ -475,11 +294,12 @@ export default function ContactForm() {
               >
                 Descubre lo que tenemos para ti
               </motion.p>
+              
             </motion.div>
 
 
 
-            {/* FORMULARIO */}
+    
             <div className="flex justify-center md:justify-end relative z-20">
               <div
                 className="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md
@@ -520,18 +340,18 @@ export default function ContactForm() {
                                focus:outline-none focus:ring-2 focus:ring-[#2c976a]"
                   />
 
-                  <textarea
+                 <textarea
                     name="mensaje"
                     placeholder="Mensaje"
                     value={form.mensaje}
                     onChange={handleChange}
-                    className="w-full p-3 rounded min-h-[110px]
-                               border border-[#2c976a]/50
-                               focus:outline-none focus:ring-2 focus:ring-[#2c976a]"
+                    className="w-full p-3 rounded h-[150px] resize-none
+                              border border-[#2c976a]/50
+                              focus:outline-none focus:ring-2 focus:ring-[#2c976a]"
                     required
                   />
 
-                  {/* Checkboxes */}
+                
                   <div className="space-y-3">
                     <label className="flex items-start space-x-2">
                       <input
@@ -595,19 +415,35 @@ export default function ContactForm() {
           </div>
         </div>
 
-        {/* 🔹 IMAGEN DE FONDO DINÁMICA */}
         <div
-          className="-mt-96 h-[800px] bg-cover bg-[center_10%] transition-all duration-300"
+          className="
+            relative -mt-96
+            h-[420px] sm:h-[650px] md:h-[800px]
+            overflow-hidden
+            bg-green-900
+          "
+        >
+         
+          <img
+            src={bgImage || "/img/fondo.webp"}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover blur-2xl scale-110 opacity-40 sm:hidden"
+          />
 
-          style={{
-            backgroundImage: bgImage
-              ? `url(${bgImage})`
-              : "url('/img/fondo.webp')",
-          }}
-        />
+          
+          <img
+            src={bgImage || "/img/fondo.webp"}
+            alt="Fondo contacto"
+            className="
+              absolute inset-0 w-full h-full
+              object-contain sm:object-cover
+            "
+          />
+        </div>
+
       </section>
 
-      {/* Modal para Términos y Política de Privacidad */}
+  
       <TermsModal 
         isOpen={modalOpen} 
         onClose={() => setModalOpen(false)} 

@@ -16,7 +16,7 @@ import {
   Sparkles
 } from "lucide-react";
 
-// 🔹 Variantes de animación
+
 const fadeInLeft = {
   hidden: { opacity: 0, x: -50 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.8 } },
@@ -35,39 +35,33 @@ const staggerContainer = {
 };
 
 const NosotrosSection = () => {
-  // Iconos organizados por categorías
+
   const iconosFlotantes = [
-    // Iconos de experiencia y trayectoria
+
     { top: "5%", left: "5%", icon: <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />, color: "bg-white text-[#2c976a]" },
     { top: "15%", right: "5%", icon: <Award className="w-4 h-4 sm:w-5 sm:h-5" />, color: "bg-[#cb4a2a] text-white" },
     
-    // Iconos de servicios
+
     { top: "30%", left: "3%", icon: <Home className="w-4 h-4 sm:w-5 sm:h-5" />, color: "bg-[#32d28a] text-white" },
     { top: "45%", right: "8%", icon: <Building2 className="w-4 h-4 sm:w-5 sm:h-5" />, color: "bg-white text-[#2c976a]" },
     
-    // Iconos de beneficios
+
     { top: "60%", left: "6%", icon: <CreditCard className="w-4 h-4 sm:w-5 sm:h-5" />, color: "bg-[#cb4a2a] text-white" },
     { top: "75%", right: "4%", icon: <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5" />, color: "bg-white text-[#2c976a]" },
     
-    // Iconos de valores
+
     { bottom: "20%", left: "8%", icon: <Handshake className="w-4 h-4 sm:w-5 sm:h-5" />, color: "bg-[#32d28a] text-white" },
     { bottom: "35%", right: "12%", icon: <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />, color: "bg-white text-[#2c976a]" },
     
-    // Iconos de alcance
+
     { bottom: "50%", left: "2%", icon: <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />, color: "bg-[#cb4a2a] text-white" },
     { bottom: "65%", right: "2%", icon: <Users className="w-4 h-4 sm:w-5 sm:h-5" />, color: "bg-white text-[#2c976a]" },
     
-    // Iconos destacados
+
     { top: "50%", left: "50%", transform: "translate(-50%, -50%)", icon: <Target className="w-5 h-5 sm:w-6 sm:h-6" />, color: "bg-[#32d28a] text-white" },
     { bottom: "10%", left: "50%", transform: "translateX(-50%)", icon: <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />, color: "bg-[#cb4a2a] text-white" }
   ];
 
-  // const estadisticas = [
-  //   { numero: "95+", texto: "Años de experiencia", icon: Calendar },
-  //   { numero: "25+", texto: "Proyectos ejecutados", icon: Building2 },
-  //   { numero: "5,000+", texto: "Familias beneficiadas", icon: Users },
-  //   { numero: "100%", texto: "Títulos registrados", icon: ShieldCheck }
-  // ];
 
   return (
     <motion.section
@@ -77,7 +71,7 @@ const NosotrosSection = () => {
       viewport={{ once: true, margin: "-50px" }}
       variants={staggerContainer}
     >
-      {/* Elementos decorativos de fondo */}
+
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-0 left-0 w-72 h-72 bg-white/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#32d28a]/10 rounded-full blur-3xl"></div>
@@ -85,7 +79,7 @@ const NosotrosSection = () => {
 
       <div className="relative container mx-auto flex flex-col lg:flex-row items-center justify-between px-4 sm:px-6 lg:px-8 w-full gap-12 lg:gap-16 pt-8">
         
-        {/* 🔸 Texto principal mejorado */}
+    
         <motion.div
           className="w-full lg:w-1/2 text-center lg:text-left lg:pr-8"
           variants={fadeInLeft}
@@ -128,35 +122,9 @@ const NosotrosSection = () => {
           >
             TERRENO PROPIO
           </motion.h2>
-
-          {/* 🔹 Estadísticas */}
-          {/* <motion.div
-            className="grid grid-cols-2 gap-4 mt-10"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
-          >
-            {estadisticas.map((stat, index) => (
-              <motion.div
-                key={index}
-                className="flex items-center gap-3 p-3 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20"
-                whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.15)" }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <div className="bg-white p-2 rounded-lg">
-                  <stat.icon className="w-4 h-4 text-[#2c976a]" />
-                </div>
-                <div>
-                  <div className="text-white font-bold text-xl">{stat.numero}</div>
-                  <div className="text-white/80 text-sm">{stat.texto}</div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div> */}
         </motion.div>
 
-        {/* 🔸 Imagen con íconos flotantes mejorados */}
+   
         <motion.div
           className="relative w-full lg:w-1/2 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto flex justify-center items-center mt-8 lg:mt-0"
           variants={fadeInRight}
@@ -177,7 +145,7 @@ const NosotrosSection = () => {
             />
           </motion.div>
 
-          {/* 🔹 Íconos flotantes mejorados */}
+
           <div className="absolute inset-0 z-30 pointer-events-none">
             {iconosFlotantes.map((icono, i) => (
               <motion.div
@@ -214,12 +182,12 @@ const NosotrosSection = () => {
             ))}
           </div>
 
-          {/* 🔹 Efecto de brillo alrededor de la imagen */}
+
           <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#32d28a]/20 to-[#cb4a2a]/20 rounded-2xl blur-xl opacity-50"></div>
         </motion.div>
       </div>
 
-      {/* 🔹 Llamada a la acción */}
+
       <motion.div
         className="relative text-center mt-16"
         initial={{ opacity: 0, y: 30 }}

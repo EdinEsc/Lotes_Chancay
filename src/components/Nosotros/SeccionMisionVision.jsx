@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Target, Eye, Shield, TrendingUp, Users, Building2 } from "lucide-react";
 
-// 🔹 Variantes de animación
+
 const fadeInUp = {
   initial: { opacity: 0, y: 40 },
   animate: { opacity: 1, y: 0, transition: { duration: 0.6 } },
@@ -67,13 +67,13 @@ const SeccionMisionVision = () => {
       viewport={{ once: true, margin: "-50px" }}
       variants={staggerContainer}
     >
-      {/* Fondos decorativos */}
+
       <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-white"></div>
       <div className="absolute top-0 left-0 w-72 h-72 bg-[#2c976a]/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#cb4a2a]/5 rounded-full blur-3xl"></div>
 
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* 🔹 Encabezado mejorado */}
+
         <motion.div
           className="text-center mb-16 lg:mb-20"
           initial={{ opacity: 0, y: 30 }}
@@ -115,7 +115,7 @@ const SeccionMisionVision = () => {
           </motion.p>
         </motion.div>
 
-        {/* 🔹 Grid de Misión y Visión */}
+   
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto mb-16 lg:mb-20">
           {cards.map((card, index) => {
             const IconComponent = card.icon;
@@ -131,7 +131,7 @@ const SeccionMisionVision = () => {
                 }}
                 transition={{ delay: card.delay }}
               >
-                {/* Icono con gradiente */}
+          
                 <motion.div
                   className={`inline-flex p-5 rounded-2xl bg-gradient-to-r ${card.color} text-white shadow-lg mb-6`}
                   whileHover={{ scale: 1.1, rotate: 5 }}
@@ -140,7 +140,7 @@ const SeccionMisionVision = () => {
                   <IconComponent className="w-8 h-8" />
                 </motion.div>
 
-                {/* Título */}
+          
                 <motion.h3
                   className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4"
                   initial={{ opacity: 0, y: 20 }}
@@ -151,7 +151,7 @@ const SeccionMisionVision = () => {
                   {card.title}
                 </motion.h3>
 
-                {/* Descripción */}
+         
                 <motion.p
                   className="text-lg text-gray-700 leading-relaxed mb-6"
                   initial={{ opacity: 0, y: 20 }}
@@ -162,7 +162,7 @@ const SeccionMisionVision = () => {
                   {card.description}
                 </motion.p>
 
-                {/* Características */}
+      
                 <motion.div
                   className="space-y-3"
                   initial={{ opacity: 0 }}
@@ -185,14 +185,14 @@ const SeccionMisionVision = () => {
                   ))}
                 </motion.div>
 
-                {/* Efecto de brillo al hover */}
+  
                 <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 -z-10"></div>
               </motion.div>
             );
           })}
         </div>
 
-        {/* 🔹 Sección de Valores */}
+
         <motion.div
           className="text-center"
           initial={{ opacity: 0, y: 30 }}
@@ -243,7 +243,7 @@ const SeccionMisionVision = () => {
           </motion.div>
         </motion.div>
 
-        {/* 🔹 Llamada a la acción */}
+
         <motion.div
           className="text-center mt-16 lg:mt-20"
           initial={{ opacity: 0, y: 30 }}

@@ -66,7 +66,6 @@ const ChancayPlano = () => {
     setTimeout(updateConstraints, 300);
   };
 
-  // ------------------ CARRUSEL ------------------------
   const carouselImages = [
     "/Home/1.png",
     "/Home/2.png",
@@ -92,21 +91,21 @@ const ChancayPlano = () => {
       transition={{ duration: 0.6 }}
       className="w-full min-h-screen bg-white text-gray-900 py-16 px-6"
     >
-      {/* ---------------------- HEADER SIMPLE ---------------------- */}
       <div className="text-center mb-20">
-        {/* TÍTULO ESTÁTICO Y NORMAL */}
-        <motion.h2
-          className="text-5xl md:text-7xl font-extrabold tracking-tight 
-            bg-gradient-to-r from-[#2c976a] via-[#4ac48e] to-[#2c976a]
-            bg-clip-text text-transparent mb-6 drop-shadow-xl"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          Proyecto Chancay 101
-        </motion.h2>
-
-        {/* Subtítulo */}
+      <motion.h2
+        className="
+          text-5xl md:text-7xl
+          font-medium tracking-tight
+          bg-gradient-to-r from-[#2c976a] via-[#4ac48e] to-[#2c976a]
+          bg-clip-text text-transparent
+          mb-6
+        "
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        Proyecto Chancay 101
+      </motion.h2>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -118,8 +117,6 @@ const ChancayPlano = () => {
           </p>
         </motion.div>
       </div>
-
-      {/* ---------------------- 3 IMÁGENES MEJORADAS ---------------------- */}
       <div className="container mx-auto px-6 mb-20">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8">
           <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500">
@@ -180,27 +177,7 @@ const ChancayPlano = () => {
           </div>
         </div>
       </div>
-
-      {/* ---------------------- CARRUSEL ---------------------- */}
-      {/* <div className="w-full max-w-2xl mx-auto mb-14">
-        <div className="relative w-full h-20 md:h-28">
-          {carouselImages.map((img, index) => (
-            <motion.img
-              key={index}
-              src={img}
-              alt={`Carrusel ${index + 1}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: slide === index ? 1 : 0 }}
-              transition={{ duration: 1 }}
-              className="absolute top-0 left-0 w-full h-full object-contain"
-            />
-          ))}
-        </div>
-      </div> */}
-
-      {/* ---------------------- PLANO INTERACTIVO ---------------------- */}
       <div id="plano-lotes" className="relative max-w-7xl mx-auto">
-        {/* ⭐ LEYENDA MUY PEQUEÑA EN CELULAR ⭐ */}
         <div
           className="
             absolute top-3 left-3 z-30
@@ -268,7 +245,7 @@ const ChancayPlano = () => {
           </div>
         </div>
 
-        {/* CONTENEDOR DEL MAPA */}
+   
         <div
           ref={containerRef}
           className="
@@ -279,7 +256,7 @@ const ChancayPlano = () => {
             bg-white
           "
         >
-          {/* ZOOM BUTTONS */}
+     
           <div className="absolute top-4 right-4 z-20 flex flex-col gap-2 sm:gap-3">
             <button
               onClick={handleZoomIn}
@@ -345,7 +322,7 @@ const ChancayPlano = () => {
             </button>
           </div>
 
-          {/* MAPA */}
+      
           <motion.img
             ref={imageRef}
             src={planoUrl || "/Home/PLANO .jpg"}
