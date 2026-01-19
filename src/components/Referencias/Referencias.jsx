@@ -84,7 +84,7 @@ export default function Referencias() {
             >
               <div className="relative rounded-2xl overflow-hidden shadow-lg">
                 <img
-                  src={`${process.env.REACT_APP_API_URL}/storage/${ref.imagen}`}
+                  src={`https://api.chancay101.org/storage/${ref.imagen}`}
                   alt={ref.nombre}
                   className="w-full h-[240px] sm:h-[280px] lg:h-[320px] object-cover"
                 />
