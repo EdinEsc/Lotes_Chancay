@@ -95,23 +95,24 @@ const NosotrosSection = () => {
             LÍDERES EN EL SECTOR
           </motion.div>
 
-          <motion.h1
-            className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white mb-6"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            +95 AÑOS
-            <br />
-            <span className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white/90">
-              HACIENDO REALIDAD
-            </span>
-            <br />
-            <span className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-white/80">
-              EL SUEÑO DEL
-            </span>
-          </motion.h1>
+        <motion.h1
+          className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white mb-6"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          COMPROMISO QUE TRASCIENDE
+          <br />
+          <span className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white/90">
+            HACIENDO REALIDAD
+          </span>
+          <br />
+          <span className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-white/80">
+            EL SUEÑO DEL
+          </span>
+        </motion.h1>
+
 
           <motion.h2
             className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#cb4a2a] mt-6 drop-shadow-lg"
@@ -202,7 +203,7 @@ const NosotrosSection = () => {
           viewport={{ once: true }}
           transition={{ delay: 1 }}
         >
-          Confía en la experiencia de <span className="text-[#cb4a2a] font-bold">Grupo Chancay</span> para hacer realidad el sueño de tu terreno propio
+          Confía en la experiencia de <span className="text-[#cb4a2a] font-bold">Proyecto Chancay 101</span> para hacer realidad el sueño de tu terreno propio
         </motion.p>
         
         <motion.div

@@ -1,7 +1,7 @@
 import NosotrosSection from "../../components/Nosotros/NosotrosSection";
 import BeneficiosSection from "../../components/Nosotros/BeneficiosSection";
 import SeccionMisionVision from "../../components/Nosotros/SeccionMisionVision";
-import BlogPie from "../../components/Blog/Blogpie";
+// import BlogPie from "../../components/Blog/Blogpie";
 
 const Nosotros = () => {
 
@@ -14,7 +14,7 @@ return (
 
       <SeccionMisionVision />
 
-      <BlogPie />
+      {/* <BlogPie /> */}
     </div>
   );
 };

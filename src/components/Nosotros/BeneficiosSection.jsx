@@ -31,10 +31,14 @@ const BeneficiosSection = () => {
   const beneficios = [
     {
       icon: FileCheck,
-      title: "Trámite 100% fácil",
+      title: "Trámite sencillo",
       description:
-        "Solo necesitas tu DNI, un recibo de servicio y el pago de la primera cuota.",
-      features: ["Sin trámites complicados", "Documentación simple", "Proceso ágil"],
+        "Proceso claro con requisitos básicos y acompañamiento en cada paso.",
+      features: [
+        "Sin trámites complicados",
+        "Documentación simple",
+        "Proceso ágil"
+      ],
       color: "from-[#2c976a] to-[#32d28a]",
       bgColor: "bg-gradient-to-br from-[#2c976a]/10 to-[#32d28a]/10",
     },
@@ -51,8 +55,12 @@ const BeneficiosSection = () => {
       icon: ShieldCheck,
       title: "Compra 100% segura",
       description:
-        "Más de 95 años de experiencia desarrollando urbanizaciones de calidad.",
-      features: ["Títulos registrados", "Legalmente constituido", "Experiencia comprobada"],
+        "Trayectoria sólida desarrollando urbanizaciones de calidad.",
+      features: [
+        "Títulos registrados",
+        "Legalmente constituido",
+        "Experiencia comprobada"
+      ],
       color: "from-[#2c976a] to-[#247b57]",
       bgColor: "bg-gradient-to-br from-[#2c976a]/10 to-[#247b57]/10",
     },
@@ -123,7 +131,7 @@ const BeneficiosSection = () => {
           <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
             Descubre las ventajas exclusivas que hacen de Chancay la mejor opción
             para invertir en tu terreno propio con{" "}
-            <span className="font-semibold text-[#2c976a]">Grupo Chancay</span>
+            <span className="font-semibold text-[#2c976a]">Proyecto Chancay 101</span>
           </p>
         </motion.div>
 
